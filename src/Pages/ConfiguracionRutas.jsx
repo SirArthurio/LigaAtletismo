@@ -9,31 +9,31 @@ import Register from "./Register/Register";
 
 export const ConfiguracionRutas=[
   {
-    path:'/LigaAtletismo',
+    path:'/',
     element:<Inicio/>,
   },
   {
-    path:'LigaAtletismo/Login',
+    path:'/Login',
     element:<Login/>,
   },
   {
-    path:'LigaAtletismo/Registro',
+    path:'/Registro',
     element:<Registro/>,
   },
   {
-    path:'LigaAtletismo/:id',
+    path:'/:id',
     element:<Producto/>,
   },
   {
-    path:'LigaAtletismo/Noticias',
+    path:'/Noticias',
     element:<Noticias/>,
   },
   {
-    path:'LigaAtletismo/Eventos',
+    path:'/Eventos',
     element:<Eventos/>,
   },
   {
-    path:'LigaAtletismo/register',
+    path:'/register',
     element:<Register/>,
   },
  
