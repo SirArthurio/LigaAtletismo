@@ -71,12 +71,12 @@ const NavbarContentStart = ({ categorias }) => (
       </Link>
     </NavbarItem>
     <NavbarItem>
-      <Link color="foreground" href="/Noticias">
+      <Link color="foreground" href="LigaAtletismo/Noticias">
         Noticias
       </Link>
     </NavbarItem>
     <NavbarItem>
-      <Link color="foreground" href="/Eventos">
+      <Link color="foreground" href="LigaAtletismo/Eventos">
         Eventos
       </Link>
     </NavbarItem>
@@ -134,7 +134,7 @@ const NavbarContentEnd = () => {
     return (
       <NavbarContent justify="end">
       <NavbarItem className="hidden lg:flex">
-        <Link className='text-green-400	' href="/Login">Login</Link>
+        <Link className='text-green-400	' href="LigaAtletismo/Login">Login</Link>
       </NavbarItem>
       <NavbarItem>
         <Button as={Link} color="success" href="#" variant="flat">

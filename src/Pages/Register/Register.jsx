@@ -122,7 +122,7 @@ const Register = () => {
                 />
               </div>
             </div>
-            <Link to="/">
+            <Link to="/LigaAtletismo">
               <button type="submit" className="btn flex" onClick={() => alerta}>
                 <span>Registrarse</span>
                 <AiOutlineSwapRight className="icon"></AiOutlineSwapRight>
