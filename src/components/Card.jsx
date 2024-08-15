@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Carta = ({ item, index }) => (
   <Card shadow="sm" key={index} isPressable>
-    <Link to={`/Productos/Producto/${item.id}`}>
+    <Link to={`/Eventos/Evento/${item.id}`}>
       <CardBody className="overflow-visible p-0">
         <Image
           shadow="sm"

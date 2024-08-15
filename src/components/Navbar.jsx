@@ -21,7 +21,7 @@ import { Link } from "react-router-dom";
 
 const NavbarBrandComponent = () => (
   <NavbarBrand className="mr-4">
-    <AcmeLogo />
+    <AcmeLogo className="size-2.5" />
     <Link color="foreground" to="/LigaAtletismo">
       <p className="hidden sm:block font-bold text-inherit">LICESAR</p>{" "}
     </Link>
