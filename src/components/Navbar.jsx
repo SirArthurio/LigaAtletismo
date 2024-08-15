@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 const NavbarBrandComponent = () => (
   <NavbarBrand className="mr-4">
     <AcmeLogo />
-    <Link color="foreground" to="/LigaAtletismo">
+    <Link color="foreground" to="/">
       <p className="hidden sm:block font-bold text-inherit">LICESAR</p>{" "}
     </Link>
   </NavbarBrand>
@@ -134,7 +134,7 @@ const NavbarContentEnd = () => {
     return (
       <NavbarContent justify="end">
       <NavbarItem className="hidden lg:flex">
-        <Link className='text-green-400	' to="LigaAtletismo/Login">Login</Link>
+        <Link className='text-green-400	' to="/Login">Login</Link>
       </NavbarItem>
       <NavbarItem>
         <Button as={Link} color="success" href="#" variant="flat">

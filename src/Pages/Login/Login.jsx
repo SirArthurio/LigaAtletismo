@@ -133,7 +133,7 @@ return(
                             
                             </div>
                         </div>
-                        <Link to='../LigaAtletismo'>
+                        <Link to='/'>
                         <button type="submit" className="btn flex">
                            <span>
                             Login
