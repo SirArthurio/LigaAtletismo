@@ -9,7 +9,7 @@ import Register from "./Register/Register";
 
 export const ConfiguracionRutas=[
   {
-    path:'/',
+    path:'/LigaAtletismo',
     element:<Inicio/>,
   },
   {
