@@ -5,7 +5,6 @@ import {
   NavbarContent,
   NavbarItem,
   Button,
-  Link,
   Input,
   DropdownItem,
   DropdownTrigger,
@@ -16,13 +15,14 @@ import {
 import { AcmeLogo } from "../assets/AcmeLogo.jsx";
 import { SearchIcon } from "../assets/SearchIcon.jsx";
 import { FiltroCategorias } from "./Filtro.jsx";
+import { Link } from "react-router-dom";
 
 
 
 const NavbarBrandComponent = () => (
   <NavbarBrand className="mr-4">
     <AcmeLogo />
-    <Link color="foreground" href="/">
+    <Link color="foreground" to="/LigaAtletismo">
       <p className="hidden sm:block font-bold text-inherit">LICESAR</p>{" "}
     </Link>
   </NavbarBrand>
@@ -56,7 +56,7 @@ const NavbarContentStart = ({ categorias }) => (
       </DropdownMenu>
     </Dropdown>
     <NavbarItem isActive>
-      <Link href="#" aria-current="page" color="success">
+      <Link className="text-lime-400" aria-current="page" color="success">
         Resultados
       </Link>
     </NavbarItem>
@@ -71,12 +71,12 @@ const NavbarContentStart = ({ categorias }) => (
       </Link>
     </NavbarItem>
     <NavbarItem>
-      <Link color="foreground" href="LigaAtletismo/Noticias">
+      <Link color="foreground" to="/LigaAtletismo/Noticias">
         Noticias
       </Link>
     </NavbarItem>
     <NavbarItem>
-      <Link color="foreground" href="LigaAtletismo/Eventos">
+      <Link color="foreground" to="LigaAtletismo/Eventos">
         Eventos
       </Link>
     </NavbarItem>
@@ -134,7 +134,7 @@ const NavbarContentEnd = () => {
     return (
       <NavbarContent justify="end">
       <NavbarItem className="hidden lg:flex">
-        <Link className='text-green-400	' href="LigaAtletismo/Login">Login</Link>
+        <Link className='text-green-400	' to="LigaAtletismo/Login">Login</Link>
       </NavbarItem>
       <NavbarItem>
         <Button as={Link} color="success" href="#" variant="flat">
