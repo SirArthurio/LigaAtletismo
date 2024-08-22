@@ -5,7 +5,7 @@ import imagen3 from "../assets/CarruselHeader/3.jpg";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Prueba } from "../API/DataPrueba";
-import Carta from "./Card";
+import {Carta} from "./Card";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { Suspense } from 'react';
 import { spinner } from '@nextui-org/theme';

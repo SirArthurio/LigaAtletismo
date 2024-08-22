@@ -8,7 +8,8 @@ export const Prueba = [
     description:
       "Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
     id: 1,
-    img: "https://scontent.fvup1-1.fna.fbcdn.net/v/t39.30808-6/448879238_18126750355359866_3822126049309882427_n.jpg?stp=dst-jpg_p526x296&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=eK_AKoT6qy8Q7kNvgEA60sE&_nc_ht=scontent.fvup1-1.fna&oh=00_AYAy7-mXs0i3lkvD-V28cyRfJlsYRhQMr_EiuMRAqyy6pg&oe=66C33E1F",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROO7fJGwXokRbUj6w4APjPaJsyvhp8Gcvgog&s",
+    fecha: "24/05/2024",
   },
   {
     product_name: "Evento regional",
@@ -20,6 +21,7 @@ export const Prueba = [
       "In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.\n\nMaecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.",
     id: 2,
     img: "https://scontent.fvup1-1.fna.fbcdn.net/v/t39.30808-6/434843868_18119188351359866_8045516855035785225_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=OImNI48Jgl4Q7kNvgGjGZk_&_nc_ht=scontent.fvup1-1.fna&oh=00_AYAx-l5rqKMmDh9WLedcwXy5zzBuZ0-bnCrnwX3g_rpxlA&oe=66C347F8",
+    fecha: "24/05/2024",
   },
   {
     product_name: "Coffee Caramel Biscotti",
@@ -31,6 +33,7 @@ export const Prueba = [
       "Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.\n\nSed ante. Vivamus tortor. Duis mattis egestas metus.",
     id: 3,
     img: "https://scontent.fvup1-1.fna.fbcdn.net/v/t39.30808-6/432934721_18117478504359866_7248084056168898707_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Msyxbp9U1xgQ7kNvgFYezTE&_nc_ht=scontent.fvup1-1.fna&oh=00_AYDtaXPuNQtHFrmTy8vsaUyzE77a5v-5frj09gXB8TZitg&oe=66C34810",
+    fecha: "24/05/2024",
   },
   {
     product_name: "Soho Lychee Liqueur",

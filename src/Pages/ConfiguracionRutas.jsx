@@ -1,11 +1,11 @@
 import React from "react";
 import {Inicio} from "./Inicio";
 import Login from "./Login/Login";
-import {Registro} from "./Registro";
-import { Evento } from "./Evento";
-import Noticias from "./Noticias";
-import Eventos from "./Eventos";
+import { Evento } from "./Eventos/Evento.jsx";
+import Noticias from "./Noticias/Noticias.jsx";
+import Eventos from "./Eventos/Eventos.jsx";
 import Register from "./Register/Register";
+import EventosCrud from "./Eventos/EventosCrud.jsx";
 
 export const ConfiguracionRutas=[
   {
@@ -15,10 +15,6 @@ export const ConfiguracionRutas=[
   {
     path:'/Login',
     element:<Login/>,
-  },
-  {
-    path:'/Registro',
-    element:<Registro/>,
   },
   {
     path:'Eventos/Evento/:id',
@@ -35,6 +31,10 @@ export const ConfiguracionRutas=[
   {
     path:'/register',
     element:<Register/>,
+  },
+  {
+    path:'LigaAtletismo/Eventos-crud',
+    element:<EventosCrud/>,
   },
  
  

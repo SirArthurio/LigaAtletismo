@@ -1,7 +1,7 @@
 import React from "react";
-import { Prueba } from "../API/DataPrueba";
+import { Prueba } from "../../API/DataPrueba.jsx";
 import { useParams } from "react-router-dom";
-import Carta from "../components/Card";
+import {Carta} from "../../components/Card";
 
 const FiltroEvento = () => {
   const { id } = useParams();

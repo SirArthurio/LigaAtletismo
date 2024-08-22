@@ -1,6 +1,6 @@
 import React from "react";
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell} from "@nextui-org/react";
-import imagen1 from "../assets/login/liga.png";
+import imagen1 from "../../assets/login/liga.png";
 
 export default function Noticias() {
   return (
