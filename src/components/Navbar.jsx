@@ -34,6 +34,15 @@ export default function App() {
     setIsMenuOpen(false);
   };
 
+  React.useEffect(() => {
+    if (isMenuOpen) {
+      // Asegúrate de que el menú se cierre después de un clic en el ítem
+      const closeMenu = () => setIsMenuOpen(false);
+      document.addEventListener("click", closeMenu);
+      return () => document.removeEventListener("click", closeMenu);
+    }
+  }, [isMenuOpen]);
+
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen} isMenuOpen={isMenuOpen} className="border-b">
       <NavbarContent>
