@@ -5,11 +5,13 @@ export const Prueba = [
     quantity: 972,
     category: "Campeonato",
     weight: 60.52,
-    description:
+    descripcion:
       "Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
     id: 1,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROO7fJGwXokRbUj6w4APjPaJsyvhp8Gcvgog&s",
-    fecha: "24/05/2024",
+    fecha: "2024-08-23",
+    titulo:"EVENTO BENEFICO",
+    contenido:"lorem "
   },
   {
     product_name: "Evento regional",

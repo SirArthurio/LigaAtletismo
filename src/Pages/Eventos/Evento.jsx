@@ -1,7 +1,10 @@
 import React from "react";
 import { Prueba } from "../../API/DataPrueba.jsx";
 import { useParams } from "react-router-dom";
-import {Carta} from "../../components/Card";
+import { FaCalendarAlt} from "react-icons/fa";
+import { IoLocationSharp } from "react-icons/io5";
+
+
 
 const FiltroEvento = () => {
   const { id } = useParams();
@@ -10,11 +13,26 @@ const FiltroEvento = () => {
   return (
     <div>
       {EventoFiltradoPorID ? (
-        <Carta
-          item={EventoFiltradoPorID}
-          key={EventoFiltradoPorID.id}
-          index={EventoFiltradoPorID.id}
-        />
+        <div className="flex-col justify-items-center ">
+          <h2 className="text-center">{EventoFiltradoPorID.titulo}</h2>
+          <div className="flex justify-center w-full">
+            <img className="w-full	" src={EventoFiltradoPorID.img} alt="" />
+          </div>
+
+          <div className="justify-items-center  w-11/12	m-4 p-4 bg-emerald-100		rounded-lg		">
+            
+            <div className="flex flex-wrap">
+            <FaCalendarAlt />
+            <p className="ml-2">{EventoFiltradoPorID.fecha}</p>
+            </div>
+            <div className="flex flex-wrap">
+            <IoLocationSharp />
+            <p className="ml-2">{EventoFiltradoPorID.lugar}</p>
+            </div>
+            <p>{EventoFiltradoPorID.descripcion}</p>
+            
+          </div>
+        </div>
       ) : (
         <p>Evento no encontrado</p>
       )}
@@ -27,8 +45,6 @@ export const Evento = () => {
     <div className="flex flex-col	justify-items-center			">
       <h2 className="text-center">Evento</h2>
       <FiltroEvento />
-      <h2>Mas Informacion :D </h2>
-      <div className="w-11/12		 h-dvh	m-4 p-4 bg-green-900	rounded-lg		"></div>
     </div>
   );
 };

@@ -8,7 +8,7 @@ import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 function AppContent() {
   const location = useLocation();
 
-  if (location.pathname === '/Login' || location.pathname === '/register') {
+  if (location.pathname === '/Login' || location.pathname === '/Register') {
     return (
       <Suspense fallback={spinner}>
         <AppRutas />

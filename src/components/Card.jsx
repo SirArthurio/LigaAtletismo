@@ -7,13 +7,16 @@ import {
   Image,
 } from "@nextui-org/react";
 import { Link } from "react-router-dom";
+import { FormatoFecha } from "./FormatoFecha.jsx";
 
 export const Carta = ({ item, index }) => (
   <Card shadow="sm" key={index} isPressable>
     <Link to={`/Eventos/Evento/${item.id}`}>
       <CardHeader>
         <div className="absolute z-10 top-6 flex-col !items-start bg-white 	rounded-lg w-3/6		">
-          <p className="text-green-800	">{item.fecha}</p>
+          <small>
+            <FormatoFecha fecha={item.fecha} />
+          </small>
         </div>
 
         <Image
@@ -32,5 +35,3 @@ export const Carta = ({ item, index }) => (
     </Link>
   </Card>
 );
-
-

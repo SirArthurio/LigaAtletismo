@@ -3,6 +3,7 @@ import {Inicio} from "./Inicio";
 import Login from "./Login/Login";
 import { Evento } from "./Eventos/Evento.jsx";
 import Noticias from "./Noticias/Noticias.jsx";
+import {Noticia} from "./Noticias/Noticia.jsx";
 import Eventos from "./Eventos/Eventos.jsx";
 import Register from "./Register/Register";
 import EventosCrud from "./Eventos/EventosCrud.jsx";
@@ -25,11 +26,15 @@ export const ConfiguracionRutas=[
     element:<Noticias/>,
   },
   {
+    path:'/Noticias/Noticia/:id',
+    element:<Noticia/>,
+  },
+  {
     path:'/Eventos',
     element:<Eventos/>,
   },
   {
-    path:'/register',
+    path:'/Register',
     element:<Register/>,
   },
   {
