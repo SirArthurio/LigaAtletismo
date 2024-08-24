@@ -26,7 +26,7 @@ export default function App() {
     },
     {
       titulo: "Sobre Nosotros",
-      ref: "/customers",
+      ref: "/SobreNosotros",
     },
   ];
 

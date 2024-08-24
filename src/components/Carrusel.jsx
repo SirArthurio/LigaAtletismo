@@ -37,7 +37,7 @@ const Carrusel = ({ item }) => {
       additionalTransfrom={0}
       arrows
       autoPlay
-      autoPlaySpeed={2000}
+      autoPlaySpeed={3000}
       centerMode={false}
       className=""
       containerClass="container-with-dots"
@@ -45,7 +45,7 @@ const Carrusel = ({ item }) => {
       draggable
       focusOnSelect={false}
       infinite
-      itemClass=""
+      itemClass="flex justify-items-center justify-center	h-1/4 w-1/4"
       keyBoardControl
       minimumTouchDrag={80}
       pauseOnHover
@@ -83,7 +83,7 @@ const Carrusel = ({ item }) => {
       rtl={false}
       shouldResetAutoplay
       sliderClass=""
-      slidesToSlide={2}
+      slidesToSlide={1}
       swipeable
     >
       {item}
@@ -92,7 +92,7 @@ const Carrusel = ({ item }) => {
 };
 
 export function CarruselEvento() {
-  return <Carrusel item={Eventos} />;
+  return <Carrusel className="w-full" item={Eventos} />;
 }
 export function CarruselImagenes() {
   const renderImage = (image) => (

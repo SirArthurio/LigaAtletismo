@@ -3,6 +3,7 @@ import { Footer } from "../components/Footer";
 import { CarruselImagenes, CarruselEvento } from "../components/Carrusel";
 import "react-image-gallery/styles/css/image-gallery.css";
 import backgroundImage from '../assets/Header/estadio-valledupar.jpg'; 
+import Patrocinadores from "../components/Patrocinadores";
 
 export const Inicio = () => {
   return (
@@ -11,7 +12,7 @@ export const Inicio = () => {
         className="bg-local h-64 bg-cover bg-center" 
         style={{ backgroundImage: `url(${backgroundImage})` }}
       ></div>
-      <div className="text-center space-y-4 p-4">
+      <div className="text-center space-y-4 p-4 border rounded-lg p-2 m-2 bg-emerald-100 ">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
           TEMPORADA 2024
         </h2>
@@ -21,12 +22,16 @@ export const Inicio = () => {
           eventos y resultados recientes.
         </p>
       </div>
-      <section>
+      <section className="border rounded-lg p-2 m-2 ">
         <CarruselImagenes />
       </section>
-      <section>
-        <h2 className="bg-white text-center">Próximos Eventos</h2>
+      <section className="border rounded-lg p-2 m-2 bg-emerald-100 "  >
+        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl p-2 text-center">Próximos Eventos</h2>
         <CarruselEvento />
+      </section>
+      <section className="border rounded-lg p-2 m-2">
+      <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl p-2 text-center">Nuestros Patrocinadores</h2>
+        <Patrocinadores/>
       </section>
       <footer>
         <Footer />

@@ -7,6 +7,8 @@ import {Noticia} from "./Noticias/Noticia.jsx";
 import Eventos from "./Eventos/Eventos.jsx";
 import Register from "./Register/Register";
 import EventosCrud from "./Eventos/EventosCrud.jsx";
+import NoticiasCrud from "./Noticias/NoticiaCrud.jsx"
+import { SobreNosotros } from "./SobreNosotros.jsx";
 
 export const ConfiguracionRutas=[
   {
@@ -40,6 +42,14 @@ export const ConfiguracionRutas=[
   {
     path:'LigaAtletismo/Eventos-crud',
     element:<EventosCrud/>,
+  },
+  {
+    path:'LigaAtletismo/Noticias-crud',
+    element:<NoticiasCrud/>,
+  },
+  {
+    path:'/SobreNosotros',
+    element:<SobreNosotros/>,
   },
  
  
