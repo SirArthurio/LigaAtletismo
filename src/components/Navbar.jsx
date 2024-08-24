@@ -30,8 +30,12 @@ export default function App() {
     },
   ];
 
+  const handleMenuItemClick = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} className="border-b">
+    <Navbar onMenuOpenChange={setIsMenuOpen} isMenuOpen={isMenuOpen} className="border-b">
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -80,6 +84,7 @@ export default function App() {
               className="w-full"
               to={item.ref}
               size="lg"
+              onClick={handleMenuItemClick} // Cierra el menú al hacer clic
             >
               {item.titulo}
             </Link>
