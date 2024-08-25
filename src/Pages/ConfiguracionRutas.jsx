@@ -8,8 +8,9 @@ import Eventos from "./Eventos/Eventos.jsx";
 import Register from "./Register/Register";
 import EventosCrud from "./Eventos/EventosCrud.jsx";
 import NoticiasCrud from "./Noticias/NoticiaCrud.jsx"
+import DeportistasCrud from "./Deportistas/DeportistaCrud.jsx"
 import { SobreNosotros } from "./SobreNosotros.jsx";
-import Admin from "./Admin.jsx";
+import {Admin} from "./Admin.jsx";
 
 export const ConfiguracionRutas=[
   {
@@ -47,6 +48,10 @@ export const ConfiguracionRutas=[
   {
     path:'/Admin/Noticias',
     element:<NoticiasCrud/>,
+  },
+  {
+    path:'/Admin/Deportistas',
+    element:<DeportistasCrud/>,
   },
   {
     path:'/SobreNosotros',

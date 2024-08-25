@@ -19,24 +19,24 @@ import { SearchIcon } from "../assets/SearchIcon.jsx";
 import { Link } from "react-router-dom";
 import { AcmeLogo } from "../assets/AcmeLogo";
 
-export default function App() {
+const menuItems = [
+  {
+    titulo: "Eventos",
+    ref: "/Eventos",
+  },
+  {
+    titulo: "Noticias",
+    ref: "/Noticias",
+  },
+  {
+    titulo: "Sobre Nosotros",
+    ref: "/SobreNosotros",
+  },
+];
+
+export default function Barra() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isLogin, setIsLogin] = React.useState(true);
-
-  const menuItems = [
-    {
-      titulo: "Eventos",
-      ref: "/Eventos",
-    },
-    {
-      titulo: "Noticias",
-      ref: "/Noticias",
-    },
-    {
-      titulo: "Sobre Nosotros",
-      ref: "/SobreNosotros",
-    },
-  ];
 
   const handleMenuItemClick = () => {
     setIsMenuOpen(false);
@@ -102,7 +102,7 @@ export default function App() {
               <DropdownItem key="analytics">Analytics</DropdownItem>
               <DropdownItem key="system">System</DropdownItem>
               <DropdownItem key="configurations">Configurations</DropdownItem>
-              <DropdownItem key="configurations">
+              <DropdownItem key="admin">
                 <Link to="/Admin">Administrar</Link>
               </DropdownItem>
               <DropdownItem key="help_and_feedback">
