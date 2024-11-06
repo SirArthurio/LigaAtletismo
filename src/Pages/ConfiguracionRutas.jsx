@@ -11,6 +11,7 @@ import NoticiasCrud from "./Noticias/NoticiaCrud.jsx"
 import DeportistasCrud from "./Deportistas/DeportistaCrud.jsx"
 import { SobreNosotros } from "./SobreNosotros.jsx";
 import {Admin} from "./Admin.jsx";
+import Carrito from "./Carrito.jsx"
 
 export const ConfiguracionRutas=[
   {
@@ -59,7 +60,11 @@ export const ConfiguracionRutas=[
   },
   {
     path: '/Admin',
-    element:<Admin/>
+    element:<Admin/>,
+  },
+  {
+    path:'/Carrito',
+    element:<Carrito/>,
   },
  
  

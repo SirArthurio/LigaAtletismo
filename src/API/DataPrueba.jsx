@@ -14,6 +14,7 @@ export const Prueba = [
     contenido: "lorem ",
     cargo: "Admin",
     nombre: "pepe",
+    rol:"deportista",
   },
   {
     product_name: "Evento regional",

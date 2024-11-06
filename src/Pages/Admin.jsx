@@ -50,7 +50,7 @@ export function Admin() {
         <div>
             <div className="h-1/3 m-4 p-4 bg-emerald-100 rounded-lg">
                 <h2 className="text-3xl text-center mt-2 pt-2">
-                    {isAdmin ? "ADMIN" : "Entrenador"}
+                    {isAdmin ? "Administrador" : "Entrenador"}
                 </h2>
             </div>
             <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 m-2">
@@ -64,5 +64,12 @@ export function Admin() {
             </div>
         </div>
     );
+}
+export function entrenador(){
+    return (
+        <div>
+            soy entrenador
+        </div>
+    )
 }
 

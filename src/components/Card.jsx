@@ -9,28 +9,28 @@ import {
 import { Link } from "react-router-dom";
 import { FormatoFecha } from "./FormatoFecha.jsx";
 
+
 export const Carta = ({ item, index }) => (
   <Card className="justify-center" shadow="sm" key={index} isPressable>
-    <Link to={`/Eventos/Evento/${item.id}`}>
+    <Link to={`/Eventos/Evento/${item._id}`}>
       <CardHeader className="h-1/4 w-full">
-        <div className="absolute z-10 top-6 flex-col !items-start bg-white 	rounded-lg w-3/6		">
+        <div className="absolute z-10 top-6 flex-col !items-start bg-white rounded-lg w-3/6">
           <small>
-            <FormatoFecha fecha={item.fecha} />
+            <FormatoFecha fecha={item.date} />
           </small>
         </div>
-
         <Image
           shadow="sm"
           radius="lg"
           width="100%"
           height="200px"
           className="z-0 w-full h-full object-cover"
-          src={item.img}
+          src={item.img && item.img.length > 0 ? item.img[0].secure_url : "default-image-url"}
         />
       </CardHeader>
 
       <CardFooter className="text-small justify-between flex flex-col">
-        <p>{item.product_name}</p>
+        <p>{item.name}</p>
         <p className="text-default-500">{item.category}</p>
       </CardFooter>
     </Link>

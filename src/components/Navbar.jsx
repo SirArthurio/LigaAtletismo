@@ -18,6 +18,7 @@ import {
 import { SearchIcon } from "../assets/SearchIcon.jsx";
 import { Link } from "react-router-dom";
 import { AcmeLogo } from "../assets/AcmeLogo";
+import { MdShoppingCart } from "react-icons/md";
 
 const menuItems = [
   {
@@ -49,11 +50,21 @@ export default function Barra() {
       return () => document.removeEventListener("click", closeMenu);
     }
   }, [isMenuOpen]);
+  const Carrito = () => {
+    return (
+      <NavbarItem>
+          <Link to="/Carrito">
+            <MdShoppingCart />
+          </Link>
+      </NavbarItem>
+    );
+  };
 
   const NavbarContentEnd = () => {
     if (!isLogin) {
       return (
         <NavbarContent justify="end">
+          <Carrito />
           <NavbarItem className="hidden lg:flex">
             <Link to="/Login">Login</Link>
           </NavbarItem>
@@ -80,6 +91,8 @@ export default function Barra() {
             startContent={<SearchIcon size={18} />}
             type="search"
           />
+          <Carrito />
+
           <Dropdown placement="bottom-end">
             <DropdownTrigger>
               <Avatar

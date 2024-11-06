@@ -4,8 +4,6 @@ import { useParams } from "react-router-dom";
 import { FaCalendarAlt} from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 
-
-
 const FiltroEvento = () => {
   const { id } = useParams();
   const EventoFiltradoPorID = Prueba.find((item) => item.id === parseInt(id));

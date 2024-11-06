@@ -13,12 +13,12 @@
     
 
     
-    const API = 'http://localhost:5285/api/Usuarios/Iniciosesion';
+    const API = 'http://localhost:3000/login';
 
    const Login = () =>{
 
     const[form, setForm] = useState({
-        'correo' : null,
+        'user' : null,
         'contrasenia' : null
     })
 
@@ -105,7 +105,7 @@ return(
                                 <FaUserShield className="icon">
                                 </FaUserShield>
                                 <input  
-                                placeholder="Ingrese su Correo Electronico"
+                                placeholder="Ingrese su Usuario"
                                 type="text"
                                 id="username"
                                 name="correo"
