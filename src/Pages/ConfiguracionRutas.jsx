@@ -11,10 +11,12 @@ import NoticiasCrud from "./Noticias/NoticiaCrud.jsx"
 import DeportistasCrud from "./Deportistas/DeportistaCrud.jsx"
 import { SobreNosotros } from "./SobreNosotros.jsx";
 import {Admin} from "./Admin.jsx";
+import {Carrito} from "./Carrito.jsx"
+import EntrenadoresCrud from "./Entrenadores/EntrenadoresCrud.jsx";
 
 export const ConfiguracionRutas=[
   {
-    path:'/LigaAtletismo',
+    path:'/',
     element:<Inicio/>,
   },
   {
@@ -50,6 +52,10 @@ export const ConfiguracionRutas=[
     element:<NoticiasCrud/>,
   },
   {
+    path:'/Admin/Entrenadores',
+    element:<EntrenadoresCrud/>,
+  },
+  {
     path:'/Admin/Deportistas',
     element:<DeportistasCrud/>,
   },
@@ -59,10 +65,11 @@ export const ConfiguracionRutas=[
   },
   {
     path: '/Admin',
-    element:<Admin/>
+    element:<Admin/>,
   },
- 
- 
-
+  {
+    path:'/Carrito',
+    element:<Carrito/>,
+  },
 ]
 

@@ -1,7 +1,7 @@
 import React, {createContext} from 'react';
 import { useState } from 'react';
 
-const UserContext = createContext({
+export const UserContext = createContext({
     user: null,
     setUser: () => {}
 });
@@ -17,4 +17,4 @@ function UserContextProvider({children}){
    );
 }
 
-export {UserContext,UserContextProvider}
+export default UserContextProvider

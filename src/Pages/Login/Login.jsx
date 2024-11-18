@@ -11,18 +11,16 @@
     import { Usuario } from '../../Models/Usuario';
     import { UserContext } from '../../Context/UserContext';
     
-
-    
-    const API = 'http://localhost:5285/api/Usuarios/Iniciosesion';
+    const API = 'http://localhost:3000/login';
 
    const Login = () =>{
 
     const[form, setForm] = useState({
-        'correo' : null,
-        'contrasenia' : null
+        'user' : null,
+        'password' : null
     })
 
-    const {setUser} = useContext(UserContext); 
+    const {setUser} = useContext(UserContext);
     const [error, setError] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState('');
     const navigate = useNavigate();
@@ -31,23 +29,26 @@
         e.preventDefault();
         axios.post(API, form)
         .then(res => {
+
             if (res.status === 200) {
+                console.log(res.data)
                 const user = new Usuario(
-                  res.data.id,
-                  res.data.nombre,
-                  res.data.correoElectronico,
-                  res.data.contrasenia,
-                  res.data.role
+                  res.data.user.document,
+                  res.data.user.name,
+                  res.data.user.user,
+                  res.data.user.levelUser
                 );
+                console.log(user);
+
                 setUser({
                     id: user.id,
                     nombre: user.nombre,
                     role: user.role,
                   });
                 console.log("Login successful!");
-                navigate("/inicio");
+                navigate("/");
               }
-        })
+         })
         .catch(error => {
             console.error("Login error:", error);
             setError(true);
@@ -105,10 +106,10 @@ return(
                                 <FaUserShield className="icon">
                                 </FaUserShield>
                                 <input  
-                                placeholder="Ingrese su Correo Electronico"
+                                placeholder="Ingrese su usuario"
                                 type="text"
                                 id="username"
-                                name="correo"
+                                name="user"
                                 onChange={manejadorState}/>
             
 
@@ -126,21 +127,21 @@ return(
                                 placeholder="Ingrese su contraseña"
                                 type="text"
                                 id="password"
-                                name="contrasenia"
+                                name="password"
                                 onChange={manejadorState}
                                 />
 
                             
                             </div>
                         </div>
-                        <Link to='/LigaAtletismo'>
+                        {/*<Link to='/LigaAtletismo'>*/}
                         <button type="submit" className="btn flex">
                            <span>
                             Login
                             </span>
                             <AiOutlineSwapRight className="icon"></AiOutlineSwapRight>
                         </button>
-                        </Link>
+                        {/*</Link>*/}
 
                         <span className="footerDiv flex">
                             Olvidaste tu contraseña? <a href="">Click Here</a>

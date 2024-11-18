@@ -1,9 +1,9 @@
-import React from "react";
 import { Footer } from "../components/Footer";
 import { CarruselImagenes, CarruselEvento } from "../components/Carrusel";
 import "react-image-gallery/styles/css/image-gallery.css";
 import backgroundImage from '../assets/Header/estadio-valledupar.jpg'; 
 import Patrocinadores from "../components/Patrocinadores";
+import Chatbot from "../components/ChaBot/ChatBot.jsx";
 
 export const Inicio = () => {
   return (
@@ -33,6 +33,7 @@ export const Inicio = () => {
       <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl p-2 text-center">Nuestros Patrocinadores</h2>
         <Patrocinadores/>
       </section>
+        <Chatbot/>
       <footer>
         <Footer />
       </footer>
