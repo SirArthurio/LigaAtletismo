@@ -1,7 +1,7 @@
 import React from "react";
 import { Input, Button } from "@nextui-org/react";
 import { ModalMensaje } from "../../components/Modal";
-import TablaUser from "../../components/Tablas";
+//import TablaUser from "../../components/Tablas";
 
 export default function NoticiasCrud() {
   return (

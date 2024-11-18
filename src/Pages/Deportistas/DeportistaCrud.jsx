@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Input, Select, SelectItem} from "@nextui-org/react";
 import { ModalMensaje } from "../../components/Modal";
-import TablaUser from "../../components/Tablas";
+//import TablaUser from "../../components/Tablas";
 import axios from "axios";
 
 const entrenadores = [

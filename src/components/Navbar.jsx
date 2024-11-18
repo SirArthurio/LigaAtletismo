@@ -1,5 +1,5 @@
-import React, {useContext} from "react";
-import {UserContext} from "../Context/UserContext.jsx";
+import React, { useContext } from "react";
+import { UserContext } from "../Context/UserContext.jsx";
 
 import {
   Navbar,
@@ -21,6 +21,7 @@ import { SearchIcon } from "../assets/SearchIcon.jsx";
 import { Link } from "react-router-dom";
 import { AcmeLogo } from "../assets/AcmeLogo";
 import { MdShoppingCart } from "react-icons/md";
+import { cerrarSesion } from "../API/Data.jsx";
 
 const menuItems = [
   {
@@ -39,11 +40,16 @@ const menuItems = [
 
 export default function Barra() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const {user} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const isLogin = user !== null;
 
   const handleMenuItemClick = () => {
     setIsMenuOpen(false);
+  };
+  const handleLogout = async() => {
+    setUser(null);
+    await cerrarSesion();
+    console.log("Usuario deslogueado");
   };
 
   React.useEffect(() => {
@@ -56,9 +62,9 @@ export default function Barra() {
   const Carrito = () => {
     return (
       <NavbarItem>
-          <Link to="/Carrito">
-            <MdShoppingCart />
-          </Link>
+        <Link to="/Carrito">
+          <MdShoppingCart />
+        </Link>
       </NavbarItem>
     );
   };
@@ -124,7 +130,7 @@ export default function Barra() {
               <DropdownItem key="help_and_feedback">
                 Help & Feedback
               </DropdownItem>
-              <DropdownItem key="logout" color="danger">
+              <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                 Log Out
               </DropdownItem>
             </DropdownMenu>
@@ -147,7 +153,7 @@ export default function Barra() {
         />
         <NavbarBrand>
           <AcmeLogo />
-          <Link to="/LigaAtletismo">
+          <Link to="/">
             <p className="font-bold text-inherit">LIATLECESAR</p>
           </Link>
         </NavbarBrand>

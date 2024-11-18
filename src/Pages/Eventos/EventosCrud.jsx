@@ -3,7 +3,6 @@ import DataTable from "react-data-table-component";
 import axios from "axios";
 import { Button, Spinner } from "@nextui-org/react";
 import { ModalForm } from "../../components/Modal";
-import FormularioEvento from "./formularioevento";
 import defaultImage from "../../assets/not_image.jpg";
 
 const EventosCrud = () => {
