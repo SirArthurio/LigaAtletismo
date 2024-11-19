@@ -37,6 +37,27 @@ export const Carta = ({ item, index }) => (
     </Link>
   </Card>
 );
+export const Carta3 = ({ item, index }) => (
+  <Card className="justify-center" shadow="sm" key={index} isPressable>
+    <Link to={`/productos/producto/${item._id}`}>
+      <CardHeader className="h-1/4 w-full">
+        <Image
+          shadow="sm"
+          radius="lg"
+          width="100%"
+          height="200px"
+          className="z-0 w-full h-full object-cover"
+          src={item.img && item.img.length > 0 ? item.img[0].secure_url : defaultImage}
+        />
+      </CardHeader>
+
+      <CardFooter className="text-small justify-between flex flex-col">
+        <p>{item.name}</p>
+        <p className="text-default-500">{item.category}</p>
+      </CardFooter>
+    </Link>
+  </Card>
+);
 
 export const Carta2 = ({ item, index }) => (
   <Card className="justify-center" shadow="sm" key={index} isPressable>

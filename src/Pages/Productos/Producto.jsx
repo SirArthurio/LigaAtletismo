@@ -8,16 +8,18 @@ import axios from "axios";
 
 const Producto = () => {
   const { id } = useParams();
-  const [producto, setProductos] = useState([]);
-  const [cantidad, setCantidad] = useState(1);
+  const [producto, setProducto] = useState({});
+  const [cantidad, setCantidad] = useState(0);
+  const [tallaSeleccionada, setTallaSeleccionada] = useState("");
   const [imagenSeleccionada, setImagenSeleccionada] = useState("");
-  
+
   useEffect(() => {
     const fetchProducto = async () => {
-      const data = await obtenerProducto(id);
-      setProductos(data);
+      const data = await obtenerProducto(id); 
+      setProducto(data);
+
       if (data.img && data.img.length > 0) {
-        setImagenSeleccionada(data.img[0].secure_url); 
+        setImagenSeleccionada(data.img[0].secure_url);
       }
     };
 
@@ -27,32 +29,58 @@ const Producto = () => {
   const incrementar = () => setCantidad((prev) => prev + 1);
   const decrementar = () => setCantidad((prev) => (prev > 1 ? prev - 1 : 1));
 
+  const seleccionarTalla = (talla) => setTallaSeleccionada(talla);
+
   const agregarAlCarrito = async () => {
     try {
-      const dataToSend = {
-        product_id: id, 
-        amount: cantidad, 
-        size: producto.size[0], 
-      };
-      
-      
-      const response = await axios.post("http://localhost:3000/carrito/carrito", dataToSend, {
-        withCredentials: true, 
+      if (!tallaSeleccionada) {
+        Swal.fire({
+          icon: "warning",
+          title: "Selecciona una talla",
+          text: "Por favor, selecciona una talla antes de añadir al carrito.",
+          confirmButtonText: "Ok",
+        });
+        return;
+      }
+      if(producto.amount<cantidad){
+        Swal.fire({
+            icon: "error",
+            title: "Error al agregar al carrito",
+            text: "No hay stock",
+            confirmButtonText: "Ok",
       });
+      return;
+    }
+      const dataToSend = {
+        product_id: id,
+        amount: cantidad,
+        size: tallaSeleccionada,
+      };
+
+      const response = await axios.post(
+        "http://localhost:3000/carrito/carrito",
+        dataToSend,
+        { withCredentials: true }
+      );
 
       if (response.status === 201) {
         Swal.fire({
-            icon: "success",
-            title: "¡Se AGREGO ESA VAINA COMPAE!",
-            text: "se ha agregado el producto al carrito.",
-            confirmButtonText: "Ok",
-          })
+          icon: "success",
+          title: "¡Producto agregado!",
+          text: "El producto se ha añadido al carrito.",
+          confirmButtonText: "Ok",
+        });
+      } else {
+        throw new Error("Estado inesperado en la respuesta.");
       }
-      
-      
     } catch (error) {
       console.error("Error al agregar al carrito:", error);
-      alert("Hubo un error al agregar el producto al carrito");
+      Swal.fire({
+        icon: "error",
+        title: "Error al agregar al carrito",
+        text: "Ocurrió un problema. Inténtalo de nuevo.",
+        confirmButtonText: "Ok",
+      });
     }
   };
 
@@ -62,24 +90,31 @@ const Producto = () => {
         <div className="grid md:grid-cols-2 gap-8">
           <div>
             <Image
-              src={imagenSeleccionada}
-              alt={producto.name}
+              src={imagenSeleccionada || "/placeholder-image.png"} // Imagen por defecto.
+              alt={producto.name || "Producto"}
               className="w-full h-auto object-cover rounded-lg"
             />
           </div>
           <div>
             <h1 className="text-3xl font-bold text-green-700 mb-4">
-              {producto.name}
+              {producto.name || "Producto sin nombre"}
             </h1>
             <p className="text-2xl font-bold text-green-600 mb-4">
-              ${producto.price}
+              ${producto.price || 0}
             </p>
-            {producto.size?.map((item, index) => (
-              <Button className="m-2 p-2" key={index}>
-                <h3 className="text-xl font-semibold mb-2">{item}</h3>
-              </Button>
-            ))}
-
+            <div className="flex flex-wrap mb-4">
+              {producto.size?.map((item, index) => (
+                <Button
+                  key={index}
+                  className={`m-2 p-2 ${
+                    tallaSeleccionada === item ? "bg-green-500 text-white" : ""
+                  }`}
+                  onPress={() => seleccionarTalla(item)}
+                >
+                  {item}
+                </Button>
+              ))}
+            </div>
             <div className="flex items-center space-x-4 mb-6">
               <Button color="success" variant="flat" onPress={decrementar}>
                 -
@@ -94,7 +129,7 @@ const Producto = () => {
               size="lg"
               className="w-full mb-4"
               startContent={<ShoppingCart className="w-5 h-5" />}
-              onClick={agregarAlCarrito} 
+              onClick={agregarAlCarrito}
             >
               Añadir al carrito
             </Button>
@@ -104,18 +139,19 @@ const Producto = () => {
           <Tab key="descripcion" title="Descripción">
             <Card>
               <CardBody>
-                <h3 className="text-xl font-semibold mb-2">Descripción del producto</h3>
-                <ul className="list-disc list-inside mt-4">
-                  {producto.description}
-                </ul>
+                <h3 className="text-xl font-semibold mb-2">
+                  Descripción del producto
+                </h3>
+                <p className="mt-4">{producto.description || "Sin descripción"}</p>
               </CardBody>
             </Card>
           </Tab>
           <Tab key="especificaciones" title="Especificaciones">
             <Card>
               <CardBody>
-                <h3 className="text-xl font-semibold mb-2">Especificaciones técnicas</h3>
-               
+                <h3 className="text-xl font-semibold mb-2">
+                  Especificaciones técnicas
+                </h3>
               </CardBody>
             </Card>
           </Tab>

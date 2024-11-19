@@ -129,8 +129,8 @@ export default function Barra() {
               <DropdownItem key="admin">
                 <Link to="/Admin">Administrar</Link>
               </DropdownItem>
-              <DropdownItem key="help_and_feedback">
-                Help & Feedback
+              <DropdownItem key="Mis compras">
+              <Link to="/facturas/usuario">Mis compras</Link>
               </DropdownItem>
               <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                 Log Out

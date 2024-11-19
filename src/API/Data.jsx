@@ -11,6 +11,17 @@ const API = axios.create({
 const API_URL_Eventos = "http://localhost:3000/eventos";
 const api_Carrito = "http://localhost:3000/carrito/carrito";
 
+export const CrearFactura=async()=>{
+  try {
+    const response = await API.post("/factura/create");
+    return response.data;
+  } catch (error) {
+  
+    console.error("Error al pagar:", error);
+    return [];
+  }
+};
+
 export const obtenerUsuarioPerfil=async()=>{
   try {
     const response = await API.get("/user/user/usuario");
@@ -20,7 +31,7 @@ export const obtenerUsuarioPerfil=async()=>{
     console.error("Error al obtener usuario:", error);
     return [];
   }
-}
+};
 export const actualizarUsuarioPerfil=async()=>{
   try {
     const response = await API.get(`/user/user/${id}`);
@@ -30,7 +41,7 @@ export const actualizarUsuarioPerfil=async()=>{
     console.error("Error al obtener productos:", error);
     return [];
   }
-}
+};
 
 
 
@@ -113,6 +124,16 @@ export const obtenerCarrito = async () => {
     } else {
       console.error("Error al realizar la solicitud:", error.message);
     }
+    return [];
+  }
+};
+
+export const eliminarDelCarrito = async(id)=>{
+  try {
+    const response = await API.delete(`/carrito/carrito/${id}`);  
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener eventos:", error, "status: 500");
     return [];
   }
 };
