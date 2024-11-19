@@ -1,5 +1,4 @@
 import React from "react";
-import { Prueba } from "../../API/DataPrueba.jsx";
 import { useParams } from "react-router-dom";
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";

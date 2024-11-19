@@ -50,7 +50,7 @@ export const Carrito = () => {
               <div>
                 <h3 className="font-semibold">{carro.name}</h3>
                 <p className="text-sm text-gray-500">
-                  ${carro.price} x {carro.amount}
+                  {carro.amount }  x  { carro.price}
                 </p>
               </div>
               <div className="flex items-center gap-4">

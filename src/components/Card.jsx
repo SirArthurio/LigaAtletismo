@@ -13,7 +13,7 @@ import { FormatoFecha } from "./FormatoFecha.jsx";
 
 export const Carta = ({ item, index }) => (
   <Card className="justify-center" shadow="sm" key={index} isPressable>
-    <Link to={`/Eventos/Evento/${item._id}`}>
+    <Link to={`/eventos/evento/${item._id}`}>
       <CardHeader className="h-1/4 w-full">
         <div className="absolute z-10 top-6 flex-col !items-start bg-white rounded-lg w-3/6">
           <small>

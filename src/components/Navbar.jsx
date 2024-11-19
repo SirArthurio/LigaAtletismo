@@ -36,6 +36,10 @@ const menuItems = [
     titulo: "Sobre Nosotros",
     ref: "/SobreNosotros",
   },
+  {
+    titulo: "Productos",
+    ref: "/Productos",
+  },
 ];
 
 export default function Barra() {
@@ -46,7 +50,7 @@ export default function Barra() {
   const handleMenuItemClick = () => {
     setIsMenuOpen(false);
   };
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     setUser(null);
     await cerrarSesion();
     console.log("Usuario deslogueado");
@@ -119,11 +123,9 @@ export default function Barra() {
                 <p className="font-semibold">Signed in as</p>
                 <p className="font-semibold">zoey@example.com</p>
               </DropdownItem>
-              <DropdownItem key="settings">My Settings</DropdownItem>
-              <DropdownItem key="team_settings">Team Settings</DropdownItem>
-              <DropdownItem key="analytics">Analytics</DropdownItem>
-              <DropdownItem key="system">System</DropdownItem>
-              <DropdownItem key="configurations">Configurations</DropdownItem>
+              <DropdownItem key="perfil">
+                <Link to="/Perfil">Perfil</Link>
+              </DropdownItem>
               <DropdownItem key="admin">
                 <Link to="/Admin">Administrar</Link>
               </DropdownItem>

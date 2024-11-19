@@ -1,13 +1,14 @@
-import { Suspense } from 'react';
-import './App.css';
+import { Suspense } from "react";
+import "./App.css";
 import { AppRutas } from "./Pages/Rutas";
 import BarraNavegacion from "./components/Navbar";
-import { spinner } from '@nextui-org/theme';
-import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import { spinner } from "@nextui-org/theme";
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
+import UserContextProvider from "./Context/UserContext";
 
 function AppContent() {
   const location = useLocation();
-  if (location.pathname === '/Login' || location.pathname === '/Register') {
+  if (location.pathname === "/Login" || location.pathname === "/Register") {
     return (
       <Suspense fallback={spinner}>
         <AppRutas />
@@ -25,9 +26,11 @@ function AppContent() {
 
 function App() {
   return (
-    <Router basename='/LigaAtletismo'>
-      <AppContent />
-    </Router>
+    <UserContextProvider>
+      <Router basename="/LigaAtletismo">
+        <AppContent />
+      </Router>
+    </UserContextProvider>
   );
 }
 

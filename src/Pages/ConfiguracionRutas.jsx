@@ -13,6 +13,9 @@ import { SobreNosotros } from "./SobreNosotros.jsx";
 import {Admin} from "./Admin.jsx";
 import {Carrito} from "./Carrito.jsx"
 import EntrenadoresCrud from "./Entrenadores/EntrenadoresCrud.jsx";
+import Productos from "./Productos/Productos.jsx";
+import Producto from "./Productos/Producto.jsx";
+import { Perfil } from "./Perfil/Perfil.jsx";
 
 export const ConfiguracionRutas=[
   {
@@ -24,7 +27,7 @@ export const ConfiguracionRutas=[
     element:<Login/>,
   },
   {
-    path:'Eventos/Evento/:id',
+    path:'eventos/evento/:id',
     element:<Evento/>,
   },
   {
@@ -70,6 +73,18 @@ export const ConfiguracionRutas=[
   {
     path:'/Carrito',
     element:<Carrito/>,
+  },
+  {
+    path:'/Productos',
+    element:<Productos/>,
+  },
+  {
+    path:'/Productos/producto/:id',
+    element:<Producto/>,
+  },
+  {
+    path:'/Perfil',
+    element:<Perfil/>,
   },
 ]
 
