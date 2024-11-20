@@ -10,9 +10,10 @@ import logo from "../../assets/login/liga.png";
 import { Link } from "react-router-dom";
 import { Usuario } from "../../Models/Usuario";
 import { UserContext } from "../../Context/UserContext";
+import Swal from "sweetalert2";
 axios.defaults.withCredentials = true;
 const API = axios.create({
-  baseURL: "http://localhost:3000", // Base del servidor
+  baseURL: "http://localhost:3000", 
   withCredentials: true,
 });
 
@@ -52,8 +53,20 @@ const Login = () => {
             role: user.role,
           });
 
-          console.log("Login successful!");
+          Swal.fire({
+            icon: "success",
+            title: "¡Se inicio se sesion compae!",
+            text: "Has cerrado sesión correctamente.",
+            confirmButtonText: "Ok",
+          })
           navigate("/");
+        }else if (res.status === 400){
+          Swal.fire({
+            icon: "error",
+            title: "¡Hay error compae!",
+            text: "Verifica tus credenciales.",
+            confirmButtonText: "Ok",
+          })
         }
       })
       .catch((error) => {

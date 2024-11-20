@@ -8,7 +8,7 @@ import {
   Divider,
 } from "@nextui-org/react";
 import { ShoppingCart, Trash2 } from "lucide-react";
-import { CrearFactura, obtenerCarrito,eliminarDelCarrito } from "../API/Data";
+import { CrearFactura, obtenerCarrito, eliminarDelCarrito } from "../API/Data";
 import Swal from "sweetalert2";
 
 export const Carrito = () => {
@@ -33,7 +33,7 @@ export const Carrito = () => {
 
   const eliminarProducto = async (_id) => {
     try {
-      await eliminarDelCarrito(_id); 
+      await eliminarDelCarrito(_id);
       await fetchCarrito();
       Swal.fire({
         icon: "success",
@@ -112,11 +112,25 @@ export const Carrito = () => {
                 </p>
                 <p className="text-sm text-gray-500">
                   Talla:{" "}
-                  {item.size && item.size.length > 0
-                    ? item.size.map((size, index) => (
+                  {item.size &&
+                  (Array.isArray(item.size)
+                    ? item.size
+                    : item.size.split(",").map((size) => size.trim())
+                  ).length > 0
+                    ? (Array.isArray(item.size)
+                        ? item.size
+                        : item.size.split(",").map((size) => size.trim())
+                      ).map((size, index) => (
                         <span key={index}>
                           {size}
-                          {index < item.size.length - 1 ? ", " : ""}
+                          {index <
+                          (Array.isArray(item.size)
+                            ? item.size
+                            : item.size.split(",").map((size) => size.trim())
+                          ).length -
+                            1
+                            ? ", "
+                            : ""}
                         </span>
                       ))
                     : "N/A"}

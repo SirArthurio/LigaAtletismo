@@ -6,44 +6,46 @@ export const Perfil = () => {
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState(null);
-  const [formData, setFormData] = useState(null);
+  const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Cargar datos del usuario
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const data = await obtenerUsuarioPerfil(id);
-        setUser(data);
-        setFormData(data); // Sincronizar formData con los datos cargados
-      } catch (err) {
-        setError("Error al cargar los datos del usuario.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
-  }, [id]);
+  const ObtenerUsuario = async () => {
+    try {
+      const data = await obtenerUsuarioPerfil(); 
+      setUser(data);
+      setFormData(data); 
+    } catch (err) {
+      setError("Error al cargar los datos del usuario.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // Manejar cambios en los inputs
+  useEffect(() => {
+    ObtenerUsuario();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Guardar cambios
   const handleSave = async () => {
     try {
-      const response = await actualizarUsuarioPerfil(id, formData);
-      setUser(response); // Actualiza el estado principal
-      setIsEditing(false);
+      const response = await actualizarUsuarioPerfil(formData);
+      if (response.status === 200) {
+        setUser(response.data);  
+        setIsEditing(false);
+        ObtenerUsuario();  
+      } else {
+        console.error(`Error al actualizar: ${response.status}`);
+      }
     } catch (err) {
       setError("Error al guardar los cambios.");
     }
   };
 
-  // Mostrar carga o errores
   if (loading) return <p>Cargando perfil...</p>;
   if (error) return <p>{error}</p>;
 
@@ -58,7 +60,7 @@ export const Perfil = () => {
             <input
               type="text"
               name="name"
-              value={formData?.name || ""}
+              value={formData.name || ""}
               onChange={handleChange}
               className="ml-2 border border-gray-300 rounded px-2 py-1"
             />
@@ -67,52 +69,16 @@ export const Perfil = () => {
           )}
         </div>
 
-        {/* Correo */}
+        {/* Nivel de usuario */}
         <div className="mb-4">
-          <label className="font-semibold">Correo Electrónico:</label>
-          {isEditing ? (
-            <input
-              type="email"
-              name="email"
-              value={formData?.email || ""}
-              onChange={handleChange}
-              className="ml-2 border border-gray-300 rounded px-2 py-1"
-            />
-          ) : (
-            <span className="ml-2">{user?.email}</span>
-          )}
+          <label className="font-semibold">Nivel de usuario:</label>
+          <span className="ml-2">{user?.levelUser}</span>
         </div>
 
-        {/* Teléfono */}
+        {/* Usuario */}
         <div className="mb-4">
-          <label className="font-semibold">Teléfono:</label>
-          {isEditing ? (
-            <input
-              type="tel"
-              name="phone"
-              value={formData?.phone || ""}
-              onChange={handleChange}
-              className="ml-2 border border-gray-300 rounded px-2 py-1"
-            />
-          ) : (
-            <span className="ml-2">{user?.phone}</span>
-          )}
-        </div>
-
-        {/* Dirección */}
-        <div className="mb-4">
-          <label className="font-semibold">Dirección:</label>
-          {isEditing ? (
-            <input
-              type="text"
-              name="address"
-              value={formData?.address || ""}
-              onChange={handleChange}
-              className="ml-2 border border-gray-300 rounded px-2 py-1"
-            />
-          ) : (
-            <span className="ml-2">{user?.address}</span>
-          )}
+          <label className="font-semibold">Usuario:</label>
+          <span className="ml-2">{user?.user}</span>
         </div>
 
         {/* Botones */}

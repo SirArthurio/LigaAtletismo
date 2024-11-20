@@ -15,7 +15,7 @@ const Producto = () => {
 
   useEffect(() => {
     const fetchProducto = async () => {
-      const data = await obtenerProducto(id); 
+      const data = await obtenerProducto(id);
       setProducto(data);
 
       if (data.img && data.img.length > 0) {
@@ -42,15 +42,15 @@ const Producto = () => {
         });
         return;
       }
-      if(producto.amount<cantidad){
+      if (producto.amount < cantidad) {
         Swal.fire({
-            icon: "error",
-            title: "Error al agregar al carrito",
-            text: "No hay stock",
-            confirmButtonText: "Ok",
-      });
-      return;
-    }
+          icon: "error",
+          title: "Error al agregar al carrito",
+          text: "No hay stock",
+          confirmButtonText: "Ok",
+        });
+        return;
+      }
       const dataToSend = {
         product_id: id,
         amount: cantidad,
@@ -62,7 +62,7 @@ const Producto = () => {
         dataToSend,
         { withCredentials: true }
       );
-
+      
       if (response.status === 201) {
         Swal.fire({
           icon: "success",
@@ -70,6 +70,7 @@ const Producto = () => {
           text: "El producto se ha añadido al carrito.",
           confirmButtonText: "Ok",
         });
+        
       } else {
         throw new Error("Estado inesperado en la respuesta.");
       }
@@ -90,7 +91,7 @@ const Producto = () => {
         <div className="grid md:grid-cols-2 gap-8">
           <div>
             <Image
-              src={imagenSeleccionada || "/placeholder-image.png"} // Imagen por defecto.
+              src={imagenSeleccionada || "/placeholder-image.png"} 
               alt={producto.name || "Producto"}
               className="w-full h-auto object-cover rounded-lg"
             />
@@ -103,7 +104,10 @@ const Producto = () => {
               ${producto.price || 0}
             </p>
             <div className="flex flex-wrap mb-4">
-              {producto.size?.map((item, index) => (
+              {(Array.isArray(producto.size)
+                ? producto.size[0]?.split(",").map((size) => size.trim())
+                : []
+              ).map((item, index) => (
                 <Button
                   key={index}
                   className={`m-2 p-2 ${
@@ -135,14 +139,20 @@ const Producto = () => {
             </Button>
           </div>
         </div>
-        <Tabs color="success" aria-label="Opciones del producto" className="mt-12">
+        <Tabs
+          color="success"
+          aria-label="Opciones del producto"
+          className="mt-12"
+        >
           <Tab key="descripcion" title="Descripción">
             <Card>
               <CardBody>
                 <h3 className="text-xl font-semibold mb-2">
                   Descripción del producto
                 </h3>
-                <p className="mt-4">{producto.description || "Sin descripción"}</p>
+                <p className="mt-4">
+                  {producto.description || "Sin descripción"}
+                </p>
               </CardBody>
             </Card>
           </Tab>
