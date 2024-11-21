@@ -22,6 +22,7 @@
     "@nextui-org/react": "^2.4.8",
     "@nextui-org/system": "^2.2.2",
     "@nextui-org/theme": "^2.2.6",
+    "@react-pdf/renderer": "^4.1.4",
     "axios": "^1.7.5",
     "framer-motion": "^11.3.6",
     "lucide-react": "^0.460.0",
