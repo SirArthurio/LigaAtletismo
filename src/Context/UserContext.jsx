@@ -1,5 +1,8 @@
 import React, {createContext} from 'react';
 import { useState } from 'react';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 export const UserContext = createContext({
     user: null,

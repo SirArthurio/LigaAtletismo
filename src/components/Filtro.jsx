@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import { Prueba } from "../API/DataPrueba";
 
 const categoriasUnicas =
   (() => {

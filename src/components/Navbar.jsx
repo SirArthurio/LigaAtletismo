@@ -1,5 +1,5 @@
-import React, {useContext} from "react";
-import {UserContext} from "../Context/UserContext.jsx";
+import React, { useContext } from "react";
+import { UserContext } from "../Context/UserContext.jsx";
 
 import {
   Navbar,
@@ -21,6 +21,7 @@ import { SearchIcon } from "../assets/SearchIcon.jsx";
 import { Link } from "react-router-dom";
 import { AcmeLogo } from "../assets/AcmeLogo";
 import { MdShoppingCart } from "react-icons/md";
+import { cerrarSesion } from "../API/Data.jsx";
 
 const menuItems = [
   {
@@ -35,15 +36,24 @@ const menuItems = [
     titulo: "Sobre Nosotros",
     ref: "/SobreNosotros",
   },
+  {
+    titulo: "Productos",
+    ref: "/Productos",
+  },
 ];
 
 export default function Barra() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const {user} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const isLogin = user !== null;
 
   const handleMenuItemClick = () => {
     setIsMenuOpen(false);
+  };
+  const handleLogout = async () => {
+    setUser(null);
+    await cerrarSesion();
+    console.log("Usuario deslogueado");
   };
 
   React.useEffect(() => {
@@ -56,9 +66,9 @@ export default function Barra() {
   const Carrito = () => {
     return (
       <NavbarItem>
-          <Link to="/Carrito">
-            <MdShoppingCart />
-          </Link>
+        <Link to="/Carrito">
+          <MdShoppingCart />
+        </Link>
       </NavbarItem>
     );
   };
@@ -113,18 +123,16 @@ export default function Barra() {
                 <p className="font-semibold">Signed in as</p>
                 <p className="font-semibold">zoey@example.com</p>
               </DropdownItem>
-              <DropdownItem key="settings">My Settings</DropdownItem>
-              <DropdownItem key="team_settings">Team Settings</DropdownItem>
-              <DropdownItem key="analytics">Analytics</DropdownItem>
-              <DropdownItem key="system">System</DropdownItem>
-              <DropdownItem key="configurations">Configurations</DropdownItem>
+              <DropdownItem key="perfil">
+                <Link to="/Perfil">Perfil</Link>
+              </DropdownItem>
               <DropdownItem key="admin">
                 <Link to="/Admin">Administrar</Link>
               </DropdownItem>
-              <DropdownItem key="help_and_feedback">
-                Help & Feedback
+              <DropdownItem key="Mis compras">
+              <Link to="/facturas/usuario">Mis compras</Link>
               </DropdownItem>
-              <DropdownItem key="logout" color="danger">
+              <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                 Log Out
               </DropdownItem>
             </DropdownMenu>
@@ -147,7 +155,7 @@ export default function Barra() {
         />
         <NavbarBrand>
           <AcmeLogo />
-          <Link to="/LigaAtletismo">
+          <Link to="/">
             <p className="font-bold text-inherit">LIATLECESAR</p>
           </Link>
         </NavbarBrand>

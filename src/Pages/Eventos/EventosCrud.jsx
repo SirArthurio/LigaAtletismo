@@ -3,8 +3,8 @@ import DataTable from "react-data-table-component";
 import axios from "axios";
 import { Button, Spinner } from "@nextui-org/react";
 import { ModalForm } from "../../components/Modal";
-import FormularioEvento from "./formularioevento";
 import defaultImage from "../../assets/not_image.jpg";
+import FormularioEvento from "./FormaularioEvento";
 
 const EventosCrud = () => {
   const API = "http://localhost:3000/eventos";
@@ -139,7 +139,7 @@ const EventosCrud = () => {
     try {
       const res = await axios.delete(`${API}/${eventoId}`);
 
-      if (res.status === 204) {
+      if (res.status === 200) {
         await obtenerEventos();
       } else {
         console.error(`Error al eliminar el evento: ${res.status}`);

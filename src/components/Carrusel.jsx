@@ -4,8 +4,8 @@ import imagen2 from "../assets/CarruselHeader/2.jpg";
 import imagen3 from "../assets/CarruselHeader/3.jpg";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import {obtenerEventos}   from "../API/Data";
-import { Carta } from "./Card";
+import {obtenerEventos, obtenerProductos}   from "../API/Data";
+import { Carta,Carta3 } from "./Card";
 import { Spinner } from "@nextui-org/react";
 
 
@@ -91,6 +91,26 @@ export function CarruselEvento() {
     <Suspense fallback={<Spinner size="xl" />}>
       <Carrusel item={eventos.map((item) => (
         <Carta item={item} key={item.id} index={item.id} />
+      ))} />
+    </Suspense>
+  );
+}
+export function CarruselProductos() {
+  const [productos, setProdcutos] = useState([]);
+
+  useEffect(() => {
+    const fetchProductos = async () => {
+      const data = await obtenerProductos();
+      setProdcutos(data);
+    };
+
+    fetchProductos();
+  }, []);
+
+  return (
+    <Suspense fallback={<Spinner size="xl" />}>
+      <Carrusel item={productos.map((item) => (
+        <Carta3 item={item} key={item.id} index={item.id} />
       ))} />
     </Suspense>
   );
