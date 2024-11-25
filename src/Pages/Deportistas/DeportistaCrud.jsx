@@ -1,12 +1,35 @@
 import React, {useEffect, useState} from "react";
 import {Button, Input, Select, SelectItem} from "@nextui-org/react";
-import { ModalMensaje } from "../../components/Modal";
-import TablaUser from "../../components/Tablas";
+import {ModalForm, ModalMensaje} from "../../components/Modal";
 import axios from "axios";
+import {format} from "date-fns";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  User,
+  Chip,
+  Tooltip,
+} from "@nextui-org/react";
+import { EditIcon } from "../../assets/TablasIconos/EditIcon";
+import { DeleteIcon } from "../../assets/TablasIconos/DeleteIcon";
+import FormularioDeportista from "./FormularioDeportista.jsx";
+
+const columns = [
+  { name: "Nombre"},
+  { name: "Documento"},
+  { name: "Categoría"},
+  { name: "Fecha de nacimiento"},
+  {name: "Acciones"}
+];
 
 const entrenadores = [
-  { nombre: "Alvaro",
-    id: 1234
+  { nombre: "luis enrique",
+    id: 363636
+
   }
 ];
 
@@ -24,8 +47,7 @@ const categoriasDeportes = [
 const DeportistasCrud = () => {
   const API = "http://localhost:3000/atletas";
   const [data, setData] = useState([]);
-  const [atletas, setAtletas] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [deportistaEditado, setDeportistaEditado] = useState({
     name: "",
     documentType: "",
@@ -39,7 +61,7 @@ const DeportistasCrud = () => {
   });
 
   const [preview, setPreview] = useState(null);
-  const [deportistaAEditar, setDeportistaAEditar] = useState(null);
+  const [deportistaAEditar, setDeportistaAEditar] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleChange = (e) => {
@@ -56,82 +78,6 @@ const DeportistasCrud = () => {
     const month = String(fecha.getMonth() + 1).padStart(2, "0");
     const day = String(fecha.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
-  };
-
-  const obtenerDeportistas = async () => {
-    try {
-      const res = await axios.get(API);
-      if (res.status === 200) {
-        return res.data;
-      }
-    } catch (error) {
-      console.error("Error al obtener los deportistas:", error);
-    }
-  }
-
-  useEffect(() => {
-    obtenerDeportistas().then((response) => {
-      setAtletas(response);
-    });
-  }, []);
-
-
-  const editarDeportista = (deportistaId) => {
-    const deportista = data.find((e) => e._id === deportistaId);
-    console.log(deportista);
-    if (deportista) {
-      setDeportistaAEditar(deportista);
-      setDeportistaEditado({
-        name: deportista.name,
-        documentType: deportista.documentType,
-        document: deportista.document,
-        birthdate: convertirFechaAFormatoDate(deportista.birthdate),
-        sport: deportista.sport,
-        coach: deportista.coach,
-        user: deportista.user,
-        password: deportista.password,
-        img: null,
-      });
-
-      setPreview(deportista.img[0] !== undefined ? deportista.img[0].secure_url  : null);
-      setIsModalOpen(true);
-    }
-  };
-
-
-  const actualizarDeportista = async () => {
-    if (!deportistaEditado) return;
-
-    try {
-      const { name, documentType, document, birthdate, password, sport, coach, user} = nuevoDeportista;
-
-      const res = await axios.put(`${API}/${deportistaEditado._id}`, {
-        name,
-        documentType,
-        document,
-        birthdate,
-        sport,
-        coach,
-        user,
-        password,
-      });
-
-      if (res.status === 200) {
-        const deportistaActualizado = res.data;
-        setData((prevData) =>
-            prevData.map((deportista) =>
-                deportista._id === deportistaActualizado._id ? deportistaActualizado : deportista
-            )
-        );
-        limpiarFormulario();
-        setDeportistaAEditar(null);
-        setIsModalOpen(false);
-      } else {
-        console.error(`Error al actualizar el deportista: ${res.status}`);
-      }
-    } catch (error) {
-      console.error("Error al actualizar el deportista:", error);
-    }
   };
 
   const agregarDeportista = async () => {
@@ -155,7 +101,8 @@ const DeportistasCrud = () => {
       });
 
       if (res.status === 201) {
-        setData((prevData) => [...prevData, res.data]);
+        const deportistas = await obtenerDeportistas();
+        setData(deportistas);
         limpiarFormulario();
       }
     } catch (error) {
@@ -179,8 +126,9 @@ const DeportistasCrud = () => {
     try {
       const res = await axios.delete(`${API}/${deportistaId}`);
 
-      if (res.status === 204) {
-        await obtenerDeportistas();
+      if (res.status === 200) {
+        const deportistas = await obtenerDeportistas();
+        setData(deportistas);
       } else {
         console.error(`Error al eliminar el deportista: ${res.status}`);
       }
@@ -188,6 +136,46 @@ const DeportistasCrud = () => {
       console.error("Error al eliminar el deportista:", error);
     }
   };
+
+  const actualizarDeportista = async () => {
+
+    if (!deportistaEditado) return;
+
+    try {
+      const res = await axios.put(`${API}`, deportistaEditado)
+
+      if (res.status === 200) {
+        const deportistas = await obtenerDeportistas();
+        setData(deportistas);
+        limpiarFormulario();
+        // setDeportistaEditado(null);
+        setIsModalOpen(false);
+      } else {
+        console.error(`Error al actualizar el deportista: ${res.status}`);
+      }
+    } catch (error) {
+      console.error("Error al actualizar el deportista:", error);
+    }
+  };
+
+  const obtenerDeportistas = async () => {
+    try {
+      const res = await axios.get(API);
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      console.error("Error al obtener los deportistas:", error);
+    }
+  }
+
+  useEffect(() => {
+    obtenerDeportistas().then((response) => {
+      setData(response);
+    });
+  }, []);
+
+
 
   const limpiarFormulario = () => {
     setDeportistaEditado({
@@ -203,33 +191,152 @@ const DeportistasCrud = () => {
     });
   };
 
+  const TablaDeportista = () => {
+    const renderCell = React.useCallback((item, columnKey) => {
+      const cellValue = item[columnKey];
 
+      switch (columnKey) {
+        case "Documento":
+          return (
+              <div className="flex flex-col">
+                <p className="text-bold text-sm capitalize">{cellValue}</p>
+                <p className="text-bold text-sm capitalize text-default-400">
+                  {item.document}
+                </p>
+              </div>
+          );
+        case "Nombre":
+          return (
+              <div className="flex flex-col">
+                <p className="text-bold text-sm capitalize">{cellValue}</p>
+                <p className="text-bold text-sm capitalize text-default-400">
+                  {item.name}
+                </p>
+              </div>
+          );
+        case "Categoría":
+          return (
+              <div className="flex flex-col">
+                <p className="text-bold text-sm capitalize">{cellValue}</p>
+                <p className="text-bold text-sm capitalize text-default-400">
+                  {item.sport[0]}
+                </p>
+              </div>
+          );
+        case "Fecha de nacimiento":
+          return (
+              <div className="flex flex-col">
+                <p className="text-bold text-sm capitalize">{cellValue}</p>
+                <p className="text-bold text-sm capitalize text-default-400">
+                  {format(new Date(item.birthdate), 'yyyy/MM/dd')}
+                </p>
+              </div>
+          );
+        case "Acciones":
+          return (
+              <div className="relative flex items-center gap-2">
+                <Tooltip color="danger" content="Edit user">
+                  <Button onPress={ () => {
+                    setDeportistaEditado(item);
+                    setIsModalOpen(true)}}
+                    className="text-lg text-danger cursor-pointer active:opacity-50">
+                    <EditIcon/>
+                  </Button>
+                </Tooltip>
+
+
+                <Tooltip color="danger" content="Delete user">
+                  <button onClick={async() => await eliminarDeportista(item.document)}
+                          className="text-lg text-danger cursor-pointer active:opacity-50">
+                    <DeleteIcon/>
+                  </button>
+                </Tooltip>
+              </div>
+          );
+        default:
+          return cellValue;
+      }
+    }, []);
+
+    if (!Array.isArray(data) || data.length === 0) {
+      return (
+          <div/>
+      )
+    }
+    return(
+    <div>
+      <Table aria-label="Example table with custom cells">
+        <TableHeader columns={columns}>
+          {(column) => (
+              <TableColumn
+                  key={column.name}
+                  align="center"
+              >
+                {column.name}
+              </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody items={data}>
+          {(item) => (
+              <TableRow key={item.document} align="center">
+                {(columnKey) => (
+                    <TableCell>{renderCell(item, columnKey)}</TableCell>
+                )}
+              </TableRow>
+          )}
+        </TableBody>
+      </Table>
+
+      <ModalForm
+          isOpen={isModalOpen}
+          closeOnBlur={false}
+          title={"Editar Deportista"}
+          formulario={
+            <FormularioDeportista
+                deportistaEditado={deportistaEditado}
+                setDeportistaEditado={setDeportistaEditado}
+                preview={preview}
+                handleFileChange={(e) => {
+                  const file = e.target.files[0];
+                  setDeportistaEditado((prev) => ({ ...prev, img: file }));
+                  setPreview(file ? URL.createObjectURL(file) : null);
+                }}
+            />
+          }
+          direccion={actualizarDeportista}
+          onClose={handleCloseModal}
+      />
+
+
+    </div>
+    );
+  }
 
 
   return (
-    <div className="m-3 p-5 border-2 rounded-md">
-      <section>
-        <h2 className="text-center">Registro de Deportista</h2>
-        <form className="grid grid-cols-2 p-2">
-          <Input
-              isRequired
-              label="Nombre completo del deportista:"
-              defaultValue=""
-              className="max-w-xs p-2"
-              name="name"
-              value={deportistaEditado.name}
-              onChange={handleChange}
-          />
-          <div className="flex space-x-4">
-            <Select
-                label="Identificación"
-                placeholder="Tipo de documento"
-                name="documentType"
-                className="max-w-xs"
-                value={deportistaEditado.documentType}
+      <div className="m-3 p-5 border-2 rounded-md">
+        <section>
+          <h2 className="text-center">Registro de Deportista</h2>
+          <form className="grid grid-cols-2 p-2">
+            <Input
+                isRequired
+                label="Nombre completo del deportista:"
+                defaultValue=""
+                className="max-w-xs p-2"
+                name="name"
+                value={deportistaEditado.name}
                 onChange={handleChange}
-            >
-              {tipoDeDocumento.map((tipoDeDocumento, index) => (
+            />
+            <div className="flex space-x-4">
+              <Select
+                  label="Identificación"
+                  placeholder="Tipo de documento"
+                  name="documentType"
+                  className="max-w-xs"
+                  value={deportistaEditado.documentType}
+                  onChange={handleChange}
+              >
+                {tipoDeDocumento.map((tipoDeDocumento, index) => (
                   <SelectItem key={tipoDeDocumento.nombre} value={tipoDeDocumento.nombre}>
                     {tipoDeDocumento.nombre}
                   </SelectItem>
@@ -308,16 +415,17 @@ const DeportistasCrud = () => {
               className="max-w-xs p-2"
               onChange={handleChange}
           />
-        </form>
-        <ModalMensaje/>{" "}
-        <Button color="success" onPress={() => agregarDeportista()}>
-          Agregar Deportista
-        </Button>
+          </form>
+          <Button color="success" onPress={async () => await agregarDeportista()}>
+            Agregar Deportista
+          </Button>
       </section>
-      <section className="m-3 p-5 border-2 rounded-md">
-        <TablaUser />
-      </section>
-    </div>
+        <section className="m-3 p-5 border-2 rounded-md">
+          <div className="p-4">
+            {TablaDeportista()}
+          </div>
+        </section>
+      </div>
   );
 }
 

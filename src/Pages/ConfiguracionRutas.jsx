@@ -12,7 +12,7 @@ import DeportistasCrud from "./Deportistas/DeportistaCrud.jsx"
 import { SobreNosotros } from "./SobreNosotros.jsx";
 import {Admin} from "./Admin.jsx";
 import {Carrito} from "./Carrito.jsx"
-import EntrenadoresCrud from "./Entrenadores/EntrenadoresCrud.jsx";
+import EntrenadoresCrud from "./Entrenadores/EntrenadorCrud.jsx";
 
 export const ConfiguracionRutas=[
   {
