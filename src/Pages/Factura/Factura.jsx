@@ -11,7 +11,7 @@ import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 import { Download } from "lucide-react";
 import { ObtenerFacturaUsuario } from "../../API/Data";
-import { PDFViewer,pdf} from "@react-pdf/renderer";
+import { PDFViewer, pdf } from "@react-pdf/renderer";
 import { MyDocument } from "../../components/PDF";
 
 export default function Factura() {
@@ -19,6 +19,12 @@ export default function Factura() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedFactura, setSelectedFactura] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4; // Número de facturas por página
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const [sortOrder, setSortOrder] = useState("recientes"); // "recientes" o "viejas"
 
   useEffect(() => {
     fetchFactura();
@@ -40,11 +46,22 @@ export default function Factura() {
     try {
       const blob = await pdf(<MyDocument items={factura} />).toBlob(); // Genera un Blob del documento PDF
       const url = URL.createObjectURL(blob); // Crea una URL temporal para el Blob
-      window.open(url, '_blank'); // Abre el PDF en otra pestaña
+      window.open(url, "_blank"); // Abre el PDF en otra pestaña
     } catch (error) {
       console.error("Error al generar el PDF:", error);
     }
   };
+  const sortedFacturas = [...factura].sort((a, b) => {
+    const dateA = new Date(a.fecha);
+    const dateB = new Date(b.fecha);
+
+    return sortOrder === "recientes"
+      ? dateB - dateA // Orden descendente para recientes
+      : dateA - dateB; // Orden ascendente para viejas
+  });
+
+  // Filtra las facturas actuales según la página
+  const currentFacturas = sortedFacturas.slice(startIndex, endIndex);
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -61,60 +78,88 @@ export default function Factura() {
           ) : factura.length === 0 ? (
             <p>No tienes facturas disponibles.</p>
           ) : (
-            <Table aria-label="Tabla de facturas">
-              <TableHeader>
-                <TableColumn>FECHA</TableColumn>
-                <TableColumn>MONTO TOTAL</TableColumn>
-                <TableColumn>PRODUCTOS</TableColumn>
-                <TableColumn>ACCIONES</TableColumn>
-              </TableHeader>
-              <TableBody>
-                {factura.map((item) => (
-                  <TableRow key={item._id}>
-                    <TableCell>
-                      {new Date(item.fecha).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell>${item.total}</TableCell>
-                    <TableCell>
-                      <ul>
-                        {item.productos.map((producto) => (
-                          <li key={producto._id}>
-                            {producto.name} - ${producto.price} x {producto.amount}
-                          </li>
-                        ))}
-                      </ul>
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        size="sm"
-                        variant="light"
-                        startContent={<Download size={16} />}
-                        onClick={() => handleVerPDF(item)}
-                      >
-                        Ver PDF
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <>
+              {/* Selector de orden */}
+              <div className="flex justify-end mb-4">
+                <label className="mr-2">Ordenar por:</label>
+                <select
+                  className="border rounded p-2"
+                  value={sortOrder}
+                  onChange={(e) => setSortOrder(e.target.value)}
+                >
+                  <option value="recientes">Más recientes</option>
+                  <option value="viejas">Más viejas</option>
+                </select>
+              </div>
+
+              {/* Tabla de facturas */}
+              <Table aria-label="Tabla de facturas">
+                <TableHeader>
+                  <TableColumn>FECHA</TableColumn>
+                  <TableColumn>MONTO TOTAL</TableColumn>
+                  <TableColumn>PRODUCTOS</TableColumn>
+                  <TableColumn>ACCIONES</TableColumn>
+                </TableHeader>
+                <TableBody>
+                  {currentFacturas.map((item) => (
+                    <TableRow key={item._id}>
+                      <TableCell>
+                        {new Date(item.fecha).toLocaleDateString()}
+                      </TableCell>
+                      <TableCell>${item.total}</TableCell>
+                      <TableCell>
+                        <ul>
+                          {item.productos.map((producto) => (
+                            <li key={producto._id}>
+                              {producto.name} - ${producto.price} x{" "}
+                              {producto.amount}
+                            </li>
+                          ))}
+                        </ul>
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          size="sm"
+                          variant="light"
+                          startContent={<Download size={16} />}
+                          onClick={() => handleVerPDF(item)}
+                        >
+                          Ver PDF
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+
+              {/* Controles de paginación */}
+              <div className="flex justify-center items-center mt-4">
+                <Button
+                  size="sm"
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage((prev) => prev - 1)}
+                >
+                  Anterior
+                </Button>
+                <span className="mx-4">
+                  Página {currentPage} de{" "}
+                  {Math.ceil(sortedFacturas.length / itemsPerPage)}
+                </span>
+                <Button
+                  size="sm"
+                  disabled={
+                    currentPage ===
+                    Math.ceil(sortedFacturas.length / itemsPerPage)
+                  }
+                  onClick={() => setCurrentPage((prev) => prev + 1)}
+                >
+                  Siguiente
+                </Button>
+              </div>
+            </>
           )}
         </CardBody>
       </Card>
-
-      {selectedFactura && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-4 rounded-md shadow-md">
-            <h3 className="text-lg font-bold mb-4">Factura</h3>
-            <PDFViewer style={{ width: "100%", height: "500px" }}>
-              <MyDocument items={selectedFactura} />
-            </PDFViewer>
-            <Button onClick={() => setSelectedFactura(null)} className="mt-4">
-              Cerrar
-            </Button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
