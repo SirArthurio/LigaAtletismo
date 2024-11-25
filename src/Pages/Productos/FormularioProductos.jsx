@@ -6,11 +6,11 @@ const FormularioProducto = ({
   setNuevoProducto,
   preview,
   handleFileChange,
-  noticiaEditada,
+  productoEditado,
 }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     if (name === "size") {
       const sizesArray = value.split(",").map((size) => size.trim());
       setNuevoProducto((prevState) => ({
@@ -24,12 +24,11 @@ const FormularioProducto = ({
       }));
     }
   };
-  
 
   return (
     <div>
       <h2 className="text-center">
-        {noticiaEditada ? "Editar Noticia" : "Registro de Noticia"}
+        {productoEditado ? "Editar Producto" : "Registro de Producto"}
       </h2>
       <form className="grid grid-cols-2 gap-4 p-2">
         <label htmlFor="name">Nombre del producto</label>
@@ -45,8 +44,9 @@ const FormularioProducto = ({
 
         <label htmlFor="description">Descripción del producto</label>
         <Input
+          isRequired
           id="description"
-          label="Descripción del producto"
+          label=""
           value={nuevoProducto.description || ""}
           name="description"
           onChange={handleChange}
@@ -54,8 +54,9 @@ const FormularioProducto = ({
 
         <label htmlFor="size">Tamaños del producto</label>
         <Input
+          isRequired
           id="size"
-          label="Tamaños del producto (separados por comas)"
+          label="(separados por comas)"
           value={nuevoProducto.size?.join(",") || ""}
           name="size"
           onChange={handleChange}
@@ -63,9 +64,10 @@ const FormularioProducto = ({
 
         <label htmlFor="stock">Stock del producto</label>
         <Input
+          isRequired
           id="stock"
           type="number"
-          label="Stock del producto"
+          label=""
           value={nuevoProducto.stock || ""}
           name="stock"
           onChange={handleChange}
@@ -73,6 +75,7 @@ const FormularioProducto = ({
 
         <label htmlFor="price">Precio del producto</label>
         <Input
+          isRequired
           id="price"
           type="number"
           label="Precio del producto"
@@ -83,6 +86,7 @@ const FormularioProducto = ({
 
         <label htmlFor="img">Imagen</label>
         <input
+          isRequired
           id="img"
           className="p-2"
           type="file"

@@ -48,7 +48,6 @@ const NoticiasCrud = () => {
 
   const editarNoticia = (noticiaId) => {
     const noticia = data.find((e) => e._id === noticiaId);
-    console.log(noticia);
     if (noticia) {
       setNoticiaEditada(noticia);
       setNuevaNoticia({
@@ -75,7 +74,6 @@ const NoticiasCrud = () => {
         date,
         description,
         category,
-        place,
       });
 
       if (res.status === 200) {
@@ -115,6 +113,7 @@ const NoticiasCrud = () => {
         setData((prevData) => [...prevData, res.data]);
         limpiarFormulario();
         setIsModalOpen(false);
+        obtenerNoticias();
       }
     } catch (error) {
       console.error("Error al agregar la noticia:", error);
@@ -136,7 +135,7 @@ const NoticiasCrud = () => {
     try {
       const res = await axios.delete(`${API}/${noticiaID}`);
 
-      if (res.status === 204) {
+      if (res.status === 200) {
         await obtenerNoticias();
       } else {
         console.error(`Error al eliminar la noticia: ${res.status}`);
@@ -152,7 +151,6 @@ const NoticiasCrud = () => {
       date: "",
       description: "",
       category: "",
-      place: "",
       img: null,
     });
     setPreview(null);
@@ -171,8 +169,6 @@ const NoticiasCrud = () => {
           row.img && row.img.length > 0
             ? row.img[0].secure_url
             : defaultImage;
-        console.log(row.img);
-        console.log(imageUrl);
         return (
           <img
             src={imageUrl}

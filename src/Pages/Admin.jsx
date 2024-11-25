@@ -43,13 +43,13 @@ export function Admin() {
         <div>
             <div className="h-1/3 m-4 p-4 bg-emerald-100 rounded-lg">
                 <h2 className="text-3xl text-center mt-2 pt-2">
-                    {user.role}
+                    {user.levelUser}
                 </h2>
             </div>
             <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 m-2">
                 {
                     items.map((item, index) => {
-                        if(item.roles.includes(user.role)) {
+                        if(item.roles.includes(user.levelUser)) {
                             return (<Carta2 item={item} key={item.id} index={index} />)
                         }
                     })

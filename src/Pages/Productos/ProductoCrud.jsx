@@ -14,7 +14,7 @@ const ProductosCrud = () => {
     name: "",
     stock: 0,
     price: 0,
-    size:[],
+    size: [],
     description: "",
     img: null,
   });
@@ -49,10 +49,13 @@ const ProductosCrud = () => {
         size: producto.size,
         stock: producto.stock,
         description: producto.description,
+        price:producto.price,
         img: null,
       });
 
-      setPreview(producto.img[0] !== undefined ? producto.img[0].secure_url  : null);
+      setPreview(
+        producto.img[0] !== undefined ? producto.img[0].secure_url : null
+      );
       setIsModalOpen(true);
     }
   };
@@ -61,14 +64,14 @@ const ProductosCrud = () => {
     if (!productoEditado) return;
 
     try {
-      const { name, date, description, category } = nuevoProducto;
+      const { name, size, description, stock, price } = nuevoProducto;
 
       const res = await axios.put(`${API}/${productoEditado._id}`, {
         name,
-        date,
+        size,
         description,
         stock,
-        size,
+        price,
       });
 
       if (res.status === 200) {
@@ -82,13 +85,13 @@ const ProductosCrud = () => {
         setProductoEditado(null);
         setIsModalOpen(false);
       } else {
-        console.error(`Error al actualizar la producto: ${res.status}`);
+        console.error(`Error al actualizar el producto: ${res.status}`);
       }
     } catch (error) {
-      console.error("Error al actualizar la producto:", error);
+      console.error("Error al actualizar el producto:", error);
     }
   };
-
+  
   const agregarProducto = async () => {
     try {
       const formData = new FormData();
@@ -145,9 +148,9 @@ const ProductosCrud = () => {
       name: "",
       date: "",
       description: "",
-      size:[],
-      stock:0,
-      price:0,
+      size: [],
+      stock: 0,
+      price: 0,
       img: null,
     });
     setPreview(null);
@@ -164,9 +167,7 @@ const ProductosCrud = () => {
       name: "Imagen",
       cell: (row) => {
         const imageUrl =
-          row.img && row.img.length > 0
-            ? row.img[0].secure_url
-            : defaultImage;
+          row.img && row.img.length > 0 ? row.img[0].secure_url : defaultImage;
         console.log(row.img);
         console.log(imageUrl);
         return (

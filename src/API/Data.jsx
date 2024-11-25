@@ -8,11 +8,22 @@ const API = axios.create({
 });
 
 const API_URL_Eventos = "http://localhost:3000/eventos";
-const api_Carrito = "http://localhost:3000/carrito/carrito";
 
+//Entrenadores
+export const ObtenerEntrenadores = async () => {
+  try {
+    const response = await API.get("/entrenadores");
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener:", error);
+    return [];
+  }
+};
+
+//facturas
 export const CrearFactura = async () => {
   try {
-    const response = await API.post("/factura/create");
+    const response = await API.post("/facturas/create");
     return response.data;
   } catch (error) {
     console.error("Error al pagar:", error);
@@ -22,7 +33,7 @@ export const CrearFactura = async () => {
 
 export const ObtenerFacturaUsuario = async () => {
   try {
-    const response = await API.get("/factura/getuser");
+    const response = await API.get("/facturas/getuser");
     return response.data;
   } catch (error) {
     console.error("Error al obtener:", error);
@@ -44,7 +55,7 @@ export const obtenerProductos = async () => {
 };
 export const obtenerProducto = async (id) => {
   try {
-    const response = await API.get(`/productos/producto/${id}`);
+    const response = await API.get(`/productos/${id}`);
     return response.data;
   } catch (error) {
     console.error("Error al obtener productos:", error);
@@ -56,7 +67,7 @@ export const obtenerProducto = async (id) => {
 
 export const cerrarSesion = async () => {
   try {
-    const response = await API.post("/login/logout");
+    const response = await API.post("/logout");
     Swal.fire({
       icon: "success",
       title: "¡Sesión cerrada!",
@@ -117,7 +128,7 @@ export const actualizarUsuarioPerfil = async (formData) => {
 
 export const obtenerNoticia = async (id) => {
   try {
-    const response = await API.get(`/noticias/noticia/${id}`);
+    const response = await API.get(`/noticias/${id}`);
     return response.data;
   } catch (error) {
     console.error("Error al obtener eventos:", error, "status: 500");
@@ -160,7 +171,7 @@ export const obtenerEventos = async () => {
 
 export const obtenerCarrito = async () => {
   try {
-    const response = await axios.get(api_Carrito);
+    const response = await API.get("/carritos/carrito");
     return response.data;
   } catch (error) {
     if (error.response) {
@@ -174,10 +185,32 @@ export const obtenerCarrito = async () => {
     return [];
   }
 };
+export const actualizarCarrito = async () => {
+  try {
+    const { name, documentType, password } = formData;
+    if (!name || !documentType || !password) {
+      throw new Error("Todos los campos son requeridos");
+    }
+    const response = await API.put(`/carritos/carrito/${id}`, {
+      name,
+      documentType,  
+      password,
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Error inesperado al actualizar el carrito");
+    }
+  } catch (error) {
+    console.error("Error al actualizar el carrito del usuario:", error);
+    throw new Error(error.message || "Error al actualizar el carrito del usuario");
+  }
+};
 
 export const eliminarDelCarrito = async (id) => {
   try {
-    const response = await API.delete(`/carrito/carrito/${id}`);
+    const response = await API.delete(`/carritos/carrito/${id}`);
     return response.data;
   } catch (error) {
     console.error("Error al obtener eventos:", error, "status: 500");

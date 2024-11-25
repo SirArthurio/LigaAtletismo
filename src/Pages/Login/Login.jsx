@@ -41,16 +41,18 @@ const Login = () => {
       .then((res) => {
         if (res.status === 200) {
           const user = new Usuario(
-            res.data.user.document,
+            res.data.user.id,
             res.data.user.name,
-            res.data.user.user,
-            res.data.user.levelUser
+            res.data.user.levelUser,
+            res.data.user.img 
           );
+          
 
           setUser({
             id: user.id,
-            nombre: user.nombre,
-            role: user.role,
+            name: user.name,
+            levelUser: user.levelUser,
+            img: user.img,
           });
 
           Swal.fire({
@@ -59,6 +61,7 @@ const Login = () => {
             text: "Has cerrado sesión correctamente.",
             confirmButtonText: "Ok",
           })
+         
           navigate("/");
         }else if (res.status === 400){
           Swal.fire({

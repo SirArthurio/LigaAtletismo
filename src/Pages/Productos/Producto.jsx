@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Card, CardBody, Button, Image, Tabs, Tab } from "@nextui-org/react";
 import { Star, ShoppingCart, Truck } from "lucide-react";
 import { obtenerProducto } from "../../API/Data";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { UserContext } from "../../Context/UserContext";
 
 const Producto = () => {
   const { id } = useParams();
@@ -12,6 +13,9 @@ const Producto = () => {
   const [cantidad, setCantidad] = useState(0);
   const [tallaSeleccionada, setTallaSeleccionada] = useState("");
   const [imagenSeleccionada, setImagenSeleccionada] = useState("");
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const isLogin = user !== null;
 
   useEffect(() => {
     const fetchProducto = async () => {
@@ -51,6 +55,19 @@ const Producto = () => {
         });
         return;
       }
+      if (!isLogin) {
+        Swal.fire({
+          icon: "error",
+          title: "Error al agregar al carrito",
+          text: "Inicia sesion",
+          confirmButtonText: "Ok",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/Login"); // Redirige al usuario al login
+          }
+        });
+        return;
+      }
       const dataToSend = {
         product_id: id,
         amount: cantidad,
@@ -58,11 +75,11 @@ const Producto = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:3000/carrito/carrito",
+        "http://localhost:3000/carritos/carrito",
         dataToSend,
         { withCredentials: true }
       );
-      
+
       if (response.status === 201) {
         Swal.fire({
           icon: "success",
@@ -70,7 +87,6 @@ const Producto = () => {
           text: "El producto se ha añadido al carrito.",
           confirmButtonText: "Ok",
         });
-        
       } else {
         throw new Error("Estado inesperado en la respuesta.");
       }
@@ -91,7 +107,7 @@ const Producto = () => {
         <div className="grid md:grid-cols-2 gap-8">
           <div>
             <Image
-              src={imagenSeleccionada || "/placeholder-image.png"} 
+              src={imagenSeleccionada || "/placeholder-image.png"}
               alt={producto.name || "Producto"}
               className="w-full h-auto object-cover rounded-lg"
             />

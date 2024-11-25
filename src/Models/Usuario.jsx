@@ -1,8 +1,8 @@
 export class Usuario {
-    constructor(id, nombre, correoElectronico, role) {
-      this.id = id;
-      this.nombre = nombre;
-      this.correoElectronico = correoElectronico;
-      this.role = role;
-    }
+  constructor(id, name, levelUser, img) {
+    this.id = id;
+    this.name = name;
+    this.levelUser = levelUser; 
+    this.img = img; 
+  }
 }

@@ -107,7 +107,7 @@ const EventosCrud = () => {
       formData.append("category", nuevoEvento.category);
       formData.append("place", nuevoEvento.place);
       if (nuevoEvento.img) formData.append("img", nuevoEvento.img);
-
+      
       const res = await axios.post(API, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -175,8 +175,6 @@ const EventosCrud = () => {
           row.img && row.img.length > 0
             ? row.img[0].secure_url
             : defaultImage;
-        console.log(row.img);
-        console.log(imageUrl);
         return (
           <img
             src={imageUrl}

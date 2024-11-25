@@ -45,8 +45,10 @@ const menuItems = [
 export default function Barra() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { user, setUser } = useContext(UserContext);
+
   const isLogin = user !== null;
 
+  console.log(user);
   const handleMenuItemClick = () => {
     setIsMenuOpen(false);
   };
@@ -77,7 +79,7 @@ export default function Barra() {
     if (!isLogin) {
       return (
         <NavbarContent justify="end">
-          <Carrito />
+         
           <NavbarItem className="hidden lg:flex">
             <Link to="/Login">Login</Link>
           </NavbarItem>
@@ -113,15 +115,18 @@ export default function Barra() {
                 as="button"
                 className="transition-transform"
                 color="secondary"
-                name="Jason Hughes"
+                name={user?.name || "Usuario"}
                 size="sm"
-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                src={
+                  user?.img?.[0]?.secure_url ||
+                  "https://via.placeholder.com/150"
+                }
               />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
               <DropdownItem key="profile" className="h-14 gap-2">
-                <p className="font-semibold">Signed in as</p>
-                <p className="font-semibold">zoey@example.com</p>
+                <p className="font-semibold">Logueado como:</p>
+                <p className="font-semibold">{user.name}</p>
               </DropdownItem>
               <DropdownItem key="perfil">
                 <Link to="/Perfil">Perfil</Link>
@@ -130,7 +135,7 @@ export default function Barra() {
                 <Link to="/Admin">Administrar</Link>
               </DropdownItem>
               <DropdownItem key="Mis compras">
-              <Link to="/facturas/usuario">Mis compras</Link>
+                <Link to="/facturas/usuario">Mis compras</Link>
               </DropdownItem>
               <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                 Log Out
