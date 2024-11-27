@@ -58,4 +58,11 @@ export function Admin() {
         </div>
     );
 }
+export function entrenador(){
+    return (
+        <div>
+            soy entrenador
+        </div>
+    )
+}
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { Input } from "@nextui-org/react";
 
-
 const FormularioEvento = ({
   nuevoEvento,
   setNuevoEvento,
@@ -81,7 +80,6 @@ const FormularioEvento = ({
             />
           </div>
         )}
-
 
       </form>
     </div>
