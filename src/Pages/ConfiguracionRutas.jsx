@@ -10,7 +10,6 @@ import EventosCrud from "./Eventos/EventosCrud.jsx";
 import NoticiasCrud from "./Noticias/NoticiaCrud.jsx";
 import DeportistasCrud from "./Deportistas/DeportistaCrud.jsx";
 import { SobreNosotros } from "./SobreNosotros.jsx";
-<<<<<<< HEAD
 import { Admin } from "./Admin.jsx";
 import { Carrito } from "./Carrito.jsx";
 import EntrenadorCrud from "./Entrenadores/EntrenadorCrud.jsx";
@@ -19,10 +18,6 @@ import Producto from "./Productos/Producto.jsx";
 import { Perfil } from "./Perfil/Perfil.jsx";
 import ProductosCrud from "./Productos/ProductoCrud.jsx";
 import Factura from "./Factura/Factura.jsx";
-=======
-import {Admin} from "./Admin.jsx";
-import Carrito from "./Carrito.jsx"
->>>>>>> main
 
 export const ConfiguracionRutas = [
   {
@@ -70,17 +65,16 @@ export const ConfiguracionRutas = [
     element: <EntrenadorCrud />,
   },
   {
-<<<<<<< HEAD
     path: "/Admin/Deportistas",
     element: <DeportistasCrud />,
-=======
+  },
+  {
     path: '/Admin',
     element:<Admin/>,
   },
   {
     path:'/Carrito',
     element:<Carrito/>,
->>>>>>> main
   },
   {
     path: "/SobreNosotros",

@@ -105,7 +105,6 @@ const DeportistasCrud = () => {
       formData.append("coach", parseInt(deportistaEditado.coach));
       formData.append("user", deportistaEditado.user);
       formData.append("password", deportistaEditado.password);
-      console.log(deportistaEditado.coach);
       if (deportistaEditado.img) formData.append("img", deportistaEditado.img);
 
       const res = await axios.post(API, formData, {
@@ -129,16 +128,21 @@ const DeportistasCrud = () => {
     limpiarFormulario();
   };
 
-  const eliminarDeportista = async (deportistaId) => {
+  const eliminarDeportista = async (documento) => {
     const confirmar = window.confirm(
       "¿Estás seguro de que quieres eliminar este deportista?"
     );
-
+  
     if (!confirmar) return;
-
+  
     try {
-      const res = await axios.delete(`${API}/${deportistaId}`);
-
+      const res = await axios.delete(API, {
+        headers: {
+          "Content-Type": "application/json", 
+        },
+        data: { document: documento }, 
+      });
+  
       if (res.status === 200) {
         const deportistas = await obtenerDeportistas();
         setData(deportistas);
@@ -149,6 +153,8 @@ const DeportistasCrud = () => {
       console.error("Error al eliminar el deportista:", error);
     }
   };
+  
+  
 
   const actualizarDeportista = async () => {
     if (!deportistaEditado) return;
