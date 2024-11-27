@@ -85,10 +85,6 @@ export const ConfiguracionRutas = [
     element: <Admin />,
   },
   {
-    path: "/Carrito",
-    element: <Carrito />,
-  },
-  {
     path: "/Productos",
     element: <Productos />,
   },
