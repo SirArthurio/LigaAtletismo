@@ -17,33 +17,71 @@ import {
   ModalFooter,
   Input,
   useDisclosure,
-  Image,
+  Image, Select, SelectItem,
 } from "@nextui-org/react";
 import { obtenerEvento } from "../../API/Data";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const EventoAtleta = () => {
+  const API = "http://localhost:3000/atletas";
+  const eventosAPI = "http://localhost:3000/atleta/add/eventos/evento/";
   const { id } = useParams();
   const [evento, setEvento] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedAthlete, setSelectedAthlete] = useState(null);
   const [modalMode, setModalMode] = useState("ver");
+  const [atletas, setAtletas] = useState([]);
+  const [AtletaSeleccionado, setAtletaSeleccionado] = useState();
+
+
+  const obtenerAtletas = async () => {
+    try {
+      const res = await axios.get(API);
+      if (res.status === 200) {
+        return res.data;
+      }
+    } catch (error) {
+      console.error("Error al obtener los deportistas:", error);
+    }
+  };
+
+  const agregarAtletaAEvento = async () => {
+    try {
+      const res = await axios.put(eventosAPI + id, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: { document: AtletaSeleccionado },
+      });
+      if (res.status === 200) {
+        await fetchEvento();
+      }
+    } catch (error) {
+      console.error("Error al obtener los deportistas del evento:", error);
+    }
+  };
+
+  const fetchEvento = async () => {
+    try {
+      if (id) {
+        const data = await obtenerEvento(id);
+        console.log("Datos del evento:", data);
+        setEvento(data || {});
+      }
+    } catch (error) {
+      console.error("Error al obtener el evento:", error);
+      setEvento({});
+    }
+  };
 
   useEffect(() => {
-    const fetchEvento = async () => {
-      try {
-        if (id) {
-          const data = await obtenerEvento(id);
-          console.log("Datos del evento:", data);
-          setEvento(data || {});
-        }
-      } catch (error) {
-        console.error("Error al obtener el evento:", error);
-        setEvento({});
-      }
-    };
 
     fetchEvento();
+    obtenerAtletas().then((response) => {
+      setAtletas(response);
+    });
+
   }, [id]);
 
   const handleAgg = () => {
@@ -55,7 +93,7 @@ const EventoAtleta = () => {
     setEvento((prev) => ({
       ...prev,
       athletes: (prev.athletes || []).filter(
-        (athlete) => athlete !== athleteNumber
+          (athlete) => athlete !== athleteNumber
       ),
     }));
   };
@@ -73,6 +111,13 @@ const EventoAtleta = () => {
   if (!evento?.name) {
     return <p>Cargando datos del evento...</p>;
   }
+
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setAtletaSeleccionado(value);
+  };
+
 
   return (
     <Card className="max-w-[800px] mx-auto">
@@ -126,21 +171,38 @@ const EventoAtleta = () => {
           </ModalHeader>
           <ModalBody>
             {modalMode === "añadir" && (
-              <Input
-                label="Documento del Atleta"
-                value={selectedAthlete?.document || ""}
-                onChange={(e) =>
-                  setSelectedAthlete({
-                    ...selectedAthlete,
-                    document: e.target.value,
-                  })
-                }
-              />
+              // <Input
+              //   label="Documento del Atleta"
+              //   value={selectedAthlete?.document || ""}
+              //   onChange={(e) =>
+              //     setSelectedAthlete({
+              //       ...selectedAthlete,
+              //       document: e.target.value,
+              //     })
+              //   }
+              // />
+
+                <Select
+                    label="Identificación"
+                    placeholder="Tipo de documento"
+                    name="documentType"
+                    className="max-w-xs"
+                    onChange={handleChange}
+                >
+                  {atletas.map((atleta, index) => (
+                      <SelectItem
+                          key={atleta.document}
+                          value={atleta.document}
+                      >
+                        {atleta.document}
+                      </SelectItem>
+                  ))}
+                </Select>
             )}
           </ModalBody>
           <ModalFooter>
             {modalMode === "añadir" && (
-              <Button color="primary" onPress={handleSave}>
+              <Button color="primary" onPress={async () => await agregarAtletaAEvento()}>
                 Guardar
               </Button>
             )}

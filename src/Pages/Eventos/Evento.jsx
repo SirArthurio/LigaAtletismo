@@ -39,13 +39,6 @@ const FiltroEvento = () => {
       {evento ? (
         <div className="flex-col justify-items-center ">
           <h2 className="text-center">{evento.name}</h2>
-          {requisitoCumplido && (
-            <Button
-              onClick={() => navigate(`/Eventos/Evento/${evento._id}/Atletas`)}
-            >
-              Botón Visible
-            </Button>
-          )}
           <div className="flex justify-center w-full">
             <Image
               src={
@@ -58,6 +51,7 @@ const FiltroEvento = () => {
             />
           </div>
 
+
           <div className="justify-items-center  w-11/12	m-4 p-4 bg-emerald-100		rounded-lg		">
             <div className="flex flex-wrap">
               <FaCalendarAlt />
@@ -69,7 +63,15 @@ const FiltroEvento = () => {
             </div>
             <p>{evento.description}</p>
           </div>
+          {requisitoCumplido && (
+              <Button
+                  onClick={() => navigate(`/Eventos/Evento/${evento._id}/Atletas`)}
+              >
+                Agregar Atleta al Evento
+              </Button>
+          )}
         </div>
+
       ) : (
         <p>Evento no encontrado</p>
       )}

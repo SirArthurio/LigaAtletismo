@@ -42,7 +42,6 @@ const categoriasDeportes = [
 
 const DeportistasCrud = () => {
   const [coach, setCoach] = useState([]);
-
   useEffect(() => {
     const fetchEventos = async () => {
       const data = await ObtenerEntrenadores();
@@ -51,6 +50,8 @@ const DeportistasCrud = () => {
 
     fetchEventos();
   }, []);
+
+
   const API = "http://localhost:3000/atletas";
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -77,6 +78,7 @@ const DeportistasCrud = () => {
       [name]: value,
     }));
   };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setDeportistaEditado((prev) => ({ ...prev, img: file }));
@@ -107,7 +109,7 @@ const DeportistasCrud = () => {
       formData.append("password", deportistaEditado.password);
       if (deportistaEditado.img) formData.append("img", deportistaEditado.img);
 
-      const res = await axios.post(API, formData, {
+      const res = await axios.post(API, formData,  {
         headers: {
           "Content-Type": "multipart/form-data",
         },
