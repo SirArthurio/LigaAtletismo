@@ -49,7 +49,7 @@ const EventoAtleta = () => {
   const handleAgg = () => {
     setSelectedAthlete({ document: "" });
     setModalMode("añadir");
-    onOpen(); 
+    onOpen();
   };
   const handleDelete = (athleteNumber) => {
     setEvento((prev) => ({

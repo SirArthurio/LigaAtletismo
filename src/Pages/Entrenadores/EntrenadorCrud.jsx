@@ -108,9 +108,8 @@ const EntrenadorCrud = () => {
     setIsModalOpen(false);
     limpiarFormulario();
   };
-  
 
-  const eliminarEntrenador = async (entrenadorId) => {
+  const eliminarEntrenador = async (documento) => {
     const confirmar = window.confirm(
       "¿Estás seguro de que quieres eliminar este entrenador?"
     );
@@ -118,7 +117,12 @@ const EntrenadorCrud = () => {
     if (!confirmar) return;
 
     try {
-      const res = await axios.delete(`${API}/${entrenadorId}`);
+      const res = await axios.delete(API, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: { document: documento },
+      });
 
       if (res.status === 200) {
         const entrenadores = await obtenerEntrenadores();
@@ -254,7 +258,7 @@ const EntrenadorCrud = () => {
               </Tooltip>
               <Tooltip color="succes" content="Ver Entrenador">
                 <Button
-                  onClick={ ()=> navigate(`/entrenadores/${item._id}`)}
+                  onClick={() => navigate(`/entrenadores/${item._id}`)}
                   className="text-lg text-danger cursor-pointer active:opacity-50"
                 >
                   <EyeIcon />
