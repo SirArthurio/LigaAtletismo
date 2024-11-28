@@ -1,15 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { obtenerEvento } from "../../API/Data";
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import defaultImage from "../../assets/not_image.jpg";
-import { Image } from "@nextui-org/react";
+import { Image, Button } from "@nextui-org/react";
+import { UserContext } from "../../Context/UserContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const FiltroEvento = () => {
   const { id } = useParams();
   const [evento, setEventos] = useState([]);
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+  const [requisitoCumplido, setRequisitoCumplido] = useState(false);
 
+  useEffect(() => {
+    if (
+      user?.levelUser === "Administrador" ||
+      user?.levelUser === "Entrenador"
+    ) {
+      setRequisitoCumplido(true);
+    } else {
+      setRequisitoCumplido(false);
+    }
+  }, [user?.levelUser]);
   useEffect(() => {
     const fetchEventos = async () => {
       const data = await obtenerEvento(id);
@@ -24,6 +39,13 @@ const FiltroEvento = () => {
       {evento ? (
         <div className="flex-col justify-items-center ">
           <h2 className="text-center">{evento.name}</h2>
+          {requisitoCumplido && (
+            <Button
+              onClick={() => navigate(`/Eventos/Evento/${evento._id}/Atletas`)}
+            >
+              Botón Visible
+            </Button>
+          )}
           <div className="flex justify-center w-full">
             <Image
               src={

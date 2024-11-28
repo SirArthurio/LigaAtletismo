@@ -20,12 +20,12 @@ const FormularioEntrenador = ({
     return (
         <div>
             <h2 className="text-center">
-                {"Editar Evento"}
+                {"Editar Entrenador"}
             </h2>
             <form className="grid grid-cols-2 gap-4 p-2">
                 <Input
                     isRequired
-                    label="Nombre del Evento:"
+                    label="Nombre del Entrenador:"
                     value={entrenadorEditado.name}
                     className="max-w-xs"
                     name="name"

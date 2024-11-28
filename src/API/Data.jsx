@@ -1,4 +1,5 @@
 import axios from "axios";
+import { id } from "date-fns/locale";
 import Swal from "sweetalert2";
 
 axios.defaults.withCredentials = true;
@@ -9,6 +10,22 @@ const API = axios.create({
 
 const API_URL_Eventos = "http://localhost:3000/eventos";
 
+//Atletas
+export const obtenerAtleta = async (documento) => {
+  try {
+    const response = await API.get("/atletas/atleta", {
+      headers: {
+        "Content-Type": "application/json", 
+      },
+      data: { document: documento }, 
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener eventos:", error, "status: 500");
+    return [];
+  }
+};
+
 //Entrenadores
 export const ObtenerEntrenadores = async () => {
   try {
@@ -16,6 +33,15 @@ export const ObtenerEntrenadores = async () => {
     return response.data;
   } catch (error) {
     console.error("Error al obtener:", error);
+    return [];
+  }
+};
+export const obtenerEntrenador = async (id) => {
+  try {
+    const response = await API.get(`/entrenadores/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener el entrenador:", error, "status: 500");
     return [];
   }
 };
@@ -153,6 +179,36 @@ export const obtenerEvento = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Error al obtener eventos:", error, "status: 500");
+    return [];
+  }
+};
+
+export const obtenerAtletaEvento = async (id) => {
+  try {
+    const response = await API.get(`/atletas/eventos/evento/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener eventos:", error, "status: 500");
+    return [];
+  }
+};
+
+export const añadirAtletaEvento = async (id) => {
+  try {
+    const response = await API.put(`/atleta/add/eventos/evento/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al añadir atleta al evento:", error, "status: 500");
+    return [];
+  }
+};
+
+export const eliminarAtletaEvento = async (id) => {
+  try {
+    const response = await API.put(`/atleta/delete/eventos/evento/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al añadir atleta al evento:", error, "status: 500");
     return [];
   }
 };

@@ -131,7 +131,7 @@ const Login = () => {
                 <GoShieldLock className="icon"></GoShieldLock>
                 <input
                   placeholder="Ingrese su contraseña"
-                  type="text"
+                  type="password"
                   id="password"
                   name="password"
                   onChange={manejadorState}
