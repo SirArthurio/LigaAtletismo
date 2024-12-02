@@ -25,6 +25,8 @@ const FiltroEvento = () => {
       setRequisitoCumplido(false);
     }
   }, [user?.levelUser]);
+
+  
   useEffect(() => {
     const fetchEventos = async () => {
       const data = await obtenerEvento(id);

@@ -16,9 +16,15 @@ export default function Productos() {
     fetchProductos();
   }, []);
 
-  if (productos.length === 0) {
-    return <p>No hay productos disponibles.</p>;
+  // Filtrar productos con stock
+  const productosConStock = productos.filter(
+    (producto) => producto.stock > 0 // Verifica que el stock sea mayor a 0
+  );
+
+  if (productosConStock.length === 0) {
+    return <p>No hay productos disponibles en este momento.</p>;
   }
+
   return (
     <section className="py-12 bg-gray-100">
       <div className="container mx-auto px-4">
@@ -26,7 +32,7 @@ export default function Productos() {
           Nuestros Productos
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {productos.map((producto) => (
+          {productosConStock.map((producto) => (
             <Card key={producto._id} className="max-w-sm">
               <CardBody className="p-0">
                 <Image
@@ -60,11 +66,6 @@ export default function Productos() {
               </CardFooter>
             </Card>
           ))}
-        </div>
-        <div className="mt-12 text-center">
-          <Button color="success" size="lg" className="font-semibold">
-            Ver todos los productos
-          </Button>
         </div>
       </div>
     </section>

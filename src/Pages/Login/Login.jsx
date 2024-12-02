@@ -41,7 +41,7 @@ const Login = () => {
       .then((res) => {
         if (res.status === 200) {
           const user = new Usuario(
-            res.data.user.id,
+            res.data.user._id,
             res.data.user.name,
             res.data.user.levelUser,
             res.data.user.img 
@@ -49,7 +49,7 @@ const Login = () => {
           
 
           setUser({
-            id: user.id,
+            _id: user._id,
             name: user.name,
             levelUser: user.levelUser,
             img: user.img,

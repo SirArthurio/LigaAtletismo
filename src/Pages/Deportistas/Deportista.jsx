@@ -16,18 +16,19 @@ import {
   Textarea,
   useDisclosure,
 } from "@nextui-org/react";
+import { obtenerAtleta } from "../../API/Data";
 
 const Deportista = (documento) => {
   const [deportista, setDeportista] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    const fetchEventos = async () => {
-      const data = await obtenerEvento(documento);
+    const fetchAtleta = async () => {
+      const data = await obtenerAtleta(documento);
       setDeportista(data);
     };
 
-    fetchEventos();
+    fetchAtleta();
   }, []);
   const handleEdit = () => {
     onOpen();

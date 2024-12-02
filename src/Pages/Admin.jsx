@@ -7,7 +7,7 @@ const items = [
     {
         id: "1",
         nombre: "Entrenadores",
-        roles: ["Administrador", "Atleta"],
+        roles: ["Administrador"],
         img: "https://img.freepik.com/foto-gratis/entrenador-futbol-ensenando-sus-alumnos_23-2149708010.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1723939200&semt=ais_hybrid"
     },
     {
@@ -19,7 +19,7 @@ const items = [
     {
         id: "3",
         nombre: "Productos",
-        roles: ["Administrador", "Entrenador", "Atleta","Usuario"],
+        roles: ["Administrador"],
         img: "https://img.freepik.com/fotos-premium/modelo-camiseta-blanca-etiqueta-logotipo_639785-80412.jpg"
     },
     {

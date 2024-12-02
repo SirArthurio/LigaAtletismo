@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../Context/UserContext.jsx";
 
 import {
@@ -45,9 +45,19 @@ const menuItems = [
 export default function Barra() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { user, setUser } = useContext(UserContext);
-
+  const [requisitoCumplido, setRequisitoCumplido] = useState(false);
   const isLogin = user !== null;
 
+  useEffect(() => {
+    if (
+      user?.levelUser === "Administrador" ||
+      user?.levelUser === "Entrenador"
+    ) {
+      setRequisitoCumplido(true);
+    } else {
+      setRequisitoCumplido(false);
+    }
+  }, [user?.levelUser]);
   console.log(user);
   const handleMenuItemClick = () => {
     setIsMenuOpen(false);
@@ -79,7 +89,6 @@ export default function Barra() {
     if (!isLogin) {
       return (
         <NavbarContent justify="end">
-         
           <NavbarItem className="hidden lg:flex">
             <Link to="/Login">Login</Link>
           </NavbarItem>
@@ -131,9 +140,17 @@ export default function Barra() {
               <DropdownItem key="perfil">
                 <Link to="/Perfil">Perfil</Link>
               </DropdownItem>
-              <DropdownItem key="admin">
-                <Link to="/Admin">Administrar</Link>
-              </DropdownItem>
+              {requisitoCumplido && (
+                <DropdownItem key="admin">
+                  <Link to="/Admin">Administrar</Link>
+                </DropdownItem>
+              )}
+              {requisitoCumplido && user.levelUser === "Entrenador" && (
+                <DropdownItem key="entrenador">
+                  <Link to={`/entrenadores/${user._id}`}>Entrenador</Link>
+                </DropdownItem>
+              )}
+
               <DropdownItem key="Mis compras">
                 <Link to="/facturas/usuario">Mis compras</Link>
               </DropdownItem>

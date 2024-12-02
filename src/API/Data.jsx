@@ -15,9 +15,9 @@ export const obtenerAtleta = async (documento) => {
   try {
     const response = await API.get("/atletas/atleta", {
       headers: {
-        "Content-Type": "application/json", 
+        "Content-Type": "application/json",
       },
-      data: { document: documento }, 
+      data: { document: documento },
     });
     return response.data;
   } catch (error) {
@@ -27,6 +27,42 @@ export const obtenerAtleta = async (documento) => {
 };
 
 //Entrenadores
+export const AñadirAtletaEntrenador = async (documento) => {
+  try {
+    const response = await API.put(
+      "/entrenadores/atletas/",
+      { document: documento }, 
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al agregar atleta:", error);
+    throw error; 
+  }
+};
+
+export const EliminarAtletaEntrenador = async (documento) => {
+  try {
+    const response = await API.put(
+      "/entrenadores/atletas/delete",
+      { document: documento }, 
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al eliminar atleta:", error);
+    throw error; 
+  }
+};
+
 export const ObtenerEntrenadores = async () => {
   try {
     const response = await API.get("/entrenadores");
@@ -66,7 +102,6 @@ export const ObtenerFacturaUsuario = async () => {
     return [];
   }
 };
-
 
 //productos
 
@@ -135,7 +170,7 @@ export const actualizarUsuarioPerfil = async (formData) => {
     }
     const response = await API.put(`/user/`, {
       name,
-      documentType,  
+      documentType,
       password,
     });
 
@@ -146,7 +181,9 @@ export const actualizarUsuarioPerfil = async (formData) => {
     }
   } catch (error) {
     console.error("Error al actualizar el perfil del usuario:", error);
-    throw new Error(error.message || "Error al actualizar el perfil del usuario");
+    throw new Error(
+      error.message || "Error al actualizar el perfil del usuario"
+    );
   }
 };
 
@@ -249,7 +286,7 @@ export const actualizarCarrito = async () => {
     }
     const response = await API.put(`/carritos/carrito/${id}`, {
       name,
-      documentType,  
+      documentType,
       password,
     });
 
@@ -260,7 +297,9 @@ export const actualizarCarrito = async () => {
     }
   } catch (error) {
     console.error("Error al actualizar el carrito del usuario:", error);
-    throw new Error(error.message || "Error al actualizar el carrito del usuario");
+    throw new Error(
+      error.message || "Error al actualizar el carrito del usuario"
+    );
   }
 };
 

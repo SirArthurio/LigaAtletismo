@@ -1,8 +1,10 @@
 import React from "react";
 import { Card, CardBody, Button, Progress } from "@nextui-org/react";
 import { Trophy, Users, Target } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function SobreNosotros() {
+  const navigate = useNavigate()
   return (
     <section className="py-12 bg-gradient-to-r from-green-500 to-green-700">
       <div className="container mx-auto px-4">
@@ -71,7 +73,7 @@ export function SobreNosotros() {
           </div>
         </div>
         <div className="mt-12 text-center">
-          <Button color="success" size="lg" className="font-semibold">
+          <Button onClick={()=>navigate("/login")} color="success" size="lg" className="font-semibold">
             Únete a Nuestra Comunidad
           </Button>
         </div>

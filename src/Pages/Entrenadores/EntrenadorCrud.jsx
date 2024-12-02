@@ -73,6 +73,12 @@ const EntrenadorCrud = () => {
     return `${year}-${month}-${day}`;
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setEntrenadorEditado((prev) => ({ ...prev, img: file }));
+    setPreview(file ? URL.createObjectURL(file) : null); 
+  };
+
   const agregarEntrenador = async () => {
     try {
       const formData = new FormData();
@@ -86,7 +92,9 @@ const EntrenadorCrud = () => {
       formData.append("user", entrenadorEditado.user);
       formData.append("password", entrenadorEditado.password);
 
-      if (entrenadorEditado.img) formData.append("img", entrenadorEditado.img);
+      if (entrenadorEditado.img) {
+        formData.append("img", entrenadorEditado.img);
+      }
 
       const res = await axios.post(API, formData, {
         headers: {
@@ -182,6 +190,7 @@ const EntrenadorCrud = () => {
       password: "",
       img: null,
     });
+    setPreview(null); // Limpia la vista previa
   };
 
   const TablaEntrenador = () => {
@@ -238,7 +247,7 @@ const EntrenadorCrud = () => {
                       document: item.document,
                       birthdate: item.birthdate,
                       atletas: item.athletes,
-                      // img: item.img[0] ?? null
+                      img: item.img[0] ?? null,
                     });
                     setIsModalOpen(true);
                   }}
@@ -371,10 +380,9 @@ const EntrenadorCrud = () => {
           <label className="p-2">Imagen del entrenador</label>
           <input
             name="img"
-            value={entrenadorEditado.img}
             className="p-2"
             type="file"
-            onChange={handleChange}
+            onChange={handleFileChange}
           />
 
           <Input
